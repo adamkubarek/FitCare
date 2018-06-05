@@ -10,10 +10,9 @@ import pl.javastyle.FitCare.repositories.interfaces.CategoryDAO;
 import pl.javastyle.FitCare.repositories.interfaces.ProductDAO;
 import pl.javastyle.FitCare.services.interfaces.ProductService;
 
-import javax.validation.ConstraintViolationException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,16 +28,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addNewProduct(ProductDTO productDTO) {
-        try {
-            Product addedProduct = productDAO.saveProduct(mapToProduct(productDTO));
-            return mapToProductDTO(addedProduct);
-        } catch (ConstraintViolationException e) {
-            throw new RuntimeException("Duplicated product name");
-        }
-    }
-
-    private Category checkIfCategoryExist(String categoryName) {
-        return categoryDAO.findCategoryByName(categoryName);
+        Product addedProduct = productDAO.saveProduct(mapToProduct(productDTO));
+        return mapToProductDTO(addedProduct);
     }
 
     private Product mapToProduct(ProductDTO productDTO) {
@@ -48,40 +39,42 @@ public class ProductServiceImpl implements ProductService {
         product.setCarbs(productDTO.getCarbs());
         product.setProtein(productDTO.getProtein());
         product.setFat(productDTO.getFat());
-
         Category category = checkIfCategoryExist(productDTO.getCategory());
         product.setCategory(category);
         return product;
     }
 
-    @Override
-    public Product deleteProduct(Product product) {
-        if (product.isPersisted()) {
-            return productDAO.deleteProduct(product.getId());
-        } else {
-            throw new RuntimeException("Product doesn't exist");
-        }
+    private Category checkIfCategoryExist(String categoryName) {
+        return categoryDAO.findCategoryByName(categoryName);
     }
 
     @Override
-    public List<Product> sortAllProductsByCategory() {
-        List <Product> products = productDAO.getAllProducts();
-        products.sort(Comparator.comparing(((Function<Product, Category>)Product::getCategory).andThen(Category::getName)));
-        return products;
+    public ProductDTO deleteProduct(Product product) {
+        return mapToProductDTO(productDAO.deleteProduct(product.getId()));
     }
 
     @Override
-    public List<Product> sortAllProductsByName() {
-        List <Product> products = productDAO.getAllProducts();
-        products.sort(Comparator.comparing(Product::getName));
-        return products;
+    public List<ProductDTO> sortAllProductsByCategory() {
+        return productDAO.getAllProducts().stream()
+                .map(this::mapToProductDTO)
+                .sorted(Comparator.comparing(ProductDTO::getCategory))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> sortAllProductsByCalories() {
-        List <Product> products = productDAO.getAllProducts();
-        products.sort(Comparator.comparing(Product::getCalories, Comparator.reverseOrder()));
-        return products;
+    public List<ProductDTO> sortAllProductsByName() {
+        return productDAO.getAllProducts().stream()
+                .map(this::mapToProductDTO)
+                .sorted(Comparator.comparing(ProductDTO::getName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDTO> sortAllProductsByCalories() {
+        return productDAO.getAllProducts().stream()
+                .map(this::mapToProductDTO)
+                .sorted(Comparator.comparing(ProductDTO::getCalories, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
     }
 
     @Override
