@@ -3,7 +3,7 @@ package pl.javastyle.FitCare.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.javastyle.FitCare.controllers.DTO.ProductDTO;
+import pl.javastyle.FitCare.rest.dto.ProductDTO;
 import pl.javastyle.FitCare.domain.Category;
 import pl.javastyle.FitCare.domain.Product;
 import pl.javastyle.FitCare.repositories.interfaces.CategoryDAO;
@@ -79,10 +79,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO, Long productId) {
+        Product savedProduct = productDAO.saveProduct(mapToProduct(productDTO, productId));
+        return mapToProductDTO(savedProduct);
+    }
+
+    private Product mapToProduct(ProductDTO productDTO, Long productId) {
         Product product = mapToProduct(productDTO);
         product.setId(productId);
-        Product savedProduct = productDAO.saveProduct(product);
-        return mapToProductDTO(savedProduct);
+        return product;
     }
 
     private ProductDTO mapToProductDTO(Product savedProduct) {

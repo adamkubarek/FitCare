@@ -1,9 +1,11 @@
-package pl.javastyle.FitCare.controllers.DTO;
+package pl.javastyle.FitCare.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 public class ProductDTO {
     @Getter @Setter
     @JsonIgnore

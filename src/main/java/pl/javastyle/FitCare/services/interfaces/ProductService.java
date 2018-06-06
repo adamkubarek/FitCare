@@ -1,6 +1,6 @@
 package pl.javastyle.FitCare.services.interfaces;
 
-import pl.javastyle.FitCare.controllers.DTO.ProductDTO;
+import pl.javastyle.FitCare.rest.dto.ProductDTO;
 import pl.javastyle.FitCare.domain.Product;
 
 import java.util.List;

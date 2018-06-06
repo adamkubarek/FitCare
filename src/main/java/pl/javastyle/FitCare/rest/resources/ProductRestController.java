@@ -1,11 +1,11 @@
-package pl.javastyle.FitCare.controllers;
+package pl.javastyle.FitCare.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.javastyle.FitCare.controllers.DTO.ProductDTO;
+import pl.javastyle.FitCare.rest.dto.ProductDTO;
 import pl.javastyle.FitCare.services.interfaces.ProductService;
 
 import java.net.URI;
