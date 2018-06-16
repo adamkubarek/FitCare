@@ -1,6 +1,6 @@
-package pl.javastyle.FitCare.repositories.interfaces;
+package pl.javastyle.fitcare.repositories.interfaces;
 
-import pl.javastyle.FitCare.domain.Category;
+import pl.javastyle.fitcare.domain.Category;
 
 import java.util.List;
 

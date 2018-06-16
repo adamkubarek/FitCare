@@ -1,4 +1,4 @@
-package pl.javastyle.FitCare.domain;
+package pl.javastyle.fitcare.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

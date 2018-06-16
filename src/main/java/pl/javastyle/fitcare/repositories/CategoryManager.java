@@ -1,11 +1,11 @@
-package pl.javastyle.FitCare.repositories;
+package pl.javastyle.fitcare.repositories;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.javastyle.FitCare.domain.Category;
-import pl.javastyle.FitCare.exceptions.ApplicationException;
-import pl.javastyle.FitCare.exceptions.DbErrors;
-import pl.javastyle.FitCare.repositories.interfaces.CategoryDAO;
+import pl.javastyle.fitcare.domain.Category;
+import pl.javastyle.fitcare.exceptions.ApplicationException;
+import pl.javastyle.fitcare.exceptions.DbErrors;
+import pl.javastyle.fitcare.repositories.interfaces.CategoryDAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
