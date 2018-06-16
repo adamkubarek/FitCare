@@ -3,11 +3,14 @@ package pl.javastyle.FitCare.repositories;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.FitCare.domain.Category;
+import pl.javastyle.FitCare.exceptions.ApplicationException;
+import pl.javastyle.FitCare.exceptions.DbErrors;
 import pl.javastyle.FitCare.repositories.interfaces.CategoryDAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -28,7 +31,7 @@ public class CategoryManager implements CategoryDAO {
 
     @Override
     public Category findCategoryById(Long categoryId) {
-        return null;
+        return entityManager.find(Category.class, categoryId);
     }
 
     @Override
@@ -36,9 +39,9 @@ public class CategoryManager implements CategoryDAO {
         Query query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
         query.setParameter("name", name);
         if (query.getResultList().isEmpty()) {
-            throw new RuntimeException("Category not found");
+            throw new ApplicationException(DbErrors.CATEGORY_NOT_FOUND);
         } else {
-            return (Category) query.getResultList().get(0);
+            return (Category) query.getSingleResult();
         }
     }
 
@@ -49,6 +52,6 @@ public class CategoryManager implements CategoryDAO {
 
     @Override
     public List<Category> getAllCategories() {
-        return null;
+        return Collections.emptyList();
     }
 }
