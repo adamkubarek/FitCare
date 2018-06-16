@@ -1,4 +1,4 @@
-package pl.javastyle.FitCare;
+package pl.javastyle.fitcare;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
