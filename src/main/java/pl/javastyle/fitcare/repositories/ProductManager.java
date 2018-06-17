@@ -2,6 +2,7 @@ package pl.javastyle.fitcare.repositories;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.javastyle.fitcare.domain.Category;
 import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
@@ -20,9 +21,11 @@ public class ProductManager implements ProductDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     @Override
     public Product saveProduct(Product product) {
         try {
+            setCategoryIfAlreadyExists(product);
             if (product.isPersisted()) {
                 return entityManager.merge(product);
             } else {
@@ -31,6 +34,14 @@ public class ProductManager implements ProductDAO {
             }
         } catch (ConstraintViolationException e) {
             throw new ApplicationException(DbErrors.DUPLICATED_PRODUCT_NAME);
+        }
+    }
+
+    private void setCategoryIfAlreadyExists(Product product) {
+        Query query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
+        query.setParameter("name", product.getCategory().getName());
+        if (!query.getResultList().isEmpty()) {
+            product.setCategory((Category) query.getSingleResult());
         }
     }
 
