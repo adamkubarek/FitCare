@@ -10,6 +10,7 @@ import pl.javastyle.fitcare.repositories.interfaces.CategoryDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolationException;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,11 +22,15 @@ public class CategoryManager implements CategoryDAO {
 
     @Override
     public Category saveCategory(Category category) {
-        if (category.isPersisted()) {
-            return entityManager.merge(category);
-        } else {
-            entityManager.persist(category);
-            return category;
+        try {
+            if (category.isPersisted()) {
+                return entityManager.merge(category);
+            } else {
+                entityManager.persist(category);
+                return category;
+            }
+        } catch (ConstraintViolationException e) {
+            throw new ApplicationException(DbErrors.DUPLICATED_CATEGORY_NAME);
         }
     }
 
