@@ -12,20 +12,24 @@ public class ProductMapperImpl implements ProductMapper {
     @Override
     public Product dtoToProduct(ProductDTO productDTO) {
         Product product = new Product();
+
         product.setName(productDTO.getName());
         product.setCalories(productDTO.getCalories());
         product.setCarbs(productDTO.getCarbs());
         product.setProtein(productDTO.getProtein());
         product.setFat(productDTO.getFat());
+
         Category category = new Category();
         category.setName(productDTO.getCategory());
         product.setCategory(category);
+
         return product;
     }
 
     @Override
     public ProductDTO productToDto(Product product) {
         ProductDTO productDTO = new ProductDTO();
+
         productDTO.setId(product.getId());
         productDTO.setCalories(product.getCalories());
         productDTO.setCarbs(product.getCarbs());
@@ -33,6 +37,7 @@ public class ProductMapperImpl implements ProductMapper {
         productDTO.setFat(product.getFat());
         productDTO.setName(product.getName());
         productDTO.setProtein(product.getProtein());
+
         return productDTO;
     }
 }
