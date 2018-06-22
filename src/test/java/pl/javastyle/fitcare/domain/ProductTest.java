@@ -23,6 +23,8 @@ public class ProductTest {
 
     @Test
     public void shouldNotBePersisted() {
+        this.product.setId(null);
+
         assertFalse(this.product.isPersisted());
     }
 }
