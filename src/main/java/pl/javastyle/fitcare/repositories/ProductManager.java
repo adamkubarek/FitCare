@@ -24,6 +24,29 @@ public class ProductManager implements ProductDAO {
 
 
     @Override
+    public Product findProductByName(String name) {
+        Query query =  entityManager.createQuery("SELECT p FROM Product p WHERE p.name=:name", Product.class);
+        query.setParameter("name", name);
+
+        if (query.getResultList().isEmpty()) {
+            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
+        }
+
+        return (Product) query.getResultList().get(0);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
+
+        if (query.getResultList().isEmpty()) {
+            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
+        }
+
+        return query.getResultList();
+    }
+
+    @Override
     public Product saveProduct(Product product) {
         try {
             setCategoryIfAlreadyExists(product);
@@ -49,19 +72,8 @@ public class ProductManager implements ProductDAO {
     }
 
     @Override
-    public Product findProductById(Long productId) {
-        Product product = entityManager.find(Product.class, productId);
-
-        if (product == null) {
-            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
-        }
-
-        return product;
-    }
-
-    @Override
-    public Product deleteProduct(Long productId) {
-        Product product = entityManager.find(Product.class, productId);
+    public Product deleteProduct(String productName) {
+        Product product = findProductByName(productName);
 
         if (product == null) {
             throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
@@ -69,28 +81,5 @@ public class ProductManager implements ProductDAO {
 
         entityManager.remove(product);
         return product;
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
-
-        if (query.getResultList().isEmpty()) {
-            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
-        }
-
-        return query.getResultList();
-    }
-
-    @Override
-    public Product findProductByName(String name) {
-        Query query =  entityManager.createQuery("SELECT p FROM Product p WHERE p.name=:name", Product.class);
-        query.setParameter("name", name);
-
-        if (query.getResultList().isEmpty()) {
-            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
-        }
-
-        return (Product) query.getResultList().get(0);
     }
 }
