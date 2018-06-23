@@ -3,6 +3,7 @@ package pl.javastyle.fitcare.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.javastyle.fitcare.domain.Category;
 import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
@@ -10,6 +11,7 @@ import pl.javastyle.fitcare.services.interfaces.ProductService;
 import pl.javastyle.fitcare.services.mappers.Mapper;
 import pl.javastyle.fitcare.services.mappers.ProductMapper;
 
+import javax.validation.constraints.NotNull;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,6 +73,43 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setId(productId);
         Product savedProduct = productDAO.saveProduct(mapper.dtoToDomain(productDTO));
         return mapper.domainToDto(savedProduct);
+    }
+
+    @Override
+    public ProductDTO patchProduct(ProductDTO patcher, Long productId) {
+        Product product = productDAO.findProductById(productId);
+
+        updateOptionalProperties(patcher, product);
+
+        return mapper.domainToDto(productDAO.saveProduct(product));
+    }
+
+    private void updateOptionalProperties(ProductDTO patcher, Product product) {
+        if (patcher.getName() != null) {
+            product.setName(patcher.getName());
+        }
+
+        if (patcher.getCategory() != null && !patcher.getCategory().isEmpty()) {
+            Category category = new Category();
+            category.setName(patcher.getCategory());
+            product.setCategory(category);
+        }
+
+        if (patcher.getCarbs() != null) {
+            product.setCarbs(patcher.getCarbs());
+        }
+
+        if (patcher.getProtein() != null) {
+            product.setProtein(patcher.getProtein());
+        }
+
+        if (patcher.getFat() != null) {
+            product.setFat(patcher.getFat());
+        }
+
+        if (patcher.getCalories() != null) {
+            product.setCalories(patcher.getCalories());
+        }
     }
 
     @Override

@@ -12,5 +12,6 @@ public interface ProductService {
     List<ProductDTO> sortAllProductsByCalories(List<ProductDTO> products);
     ProductDTO addNewProduct(ProductDTO product);
     ProductDTO updateProduct(ProductDTO product, Long productId);
+    ProductDTO patchProduct(ProductDTO patcher, Long productId);
     ProductDTO deleteProduct(Long id);
 }

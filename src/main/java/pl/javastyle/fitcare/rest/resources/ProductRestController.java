@@ -65,6 +65,11 @@ public class ProductRestController {
         return new ResponseEntity<>(productService.updateProduct(product, productId), HttpStatus.OK);
     }
 
+    @PatchMapping("products/{productId}")
+    public ResponseEntity patchProduct(@RequestBody ProductDTO product, @PathVariable Long productId) {
+        return new ResponseEntity<>(productService.patchProduct(product, productId), HttpStatus.OK);
+    }
+
     @DeleteMapping("products/{id}")
     public ResponseEntity deleteProduct(@PathVariable Long id) {
         return new ResponseEntity<>(productService.deleteProduct(id), HttpStatus.OK);
