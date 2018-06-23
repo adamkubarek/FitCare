@@ -8,11 +8,7 @@ import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
 import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.validation.ConstraintViolationException;
+import javax.persistence.*;
 import java.util.List;
 
 @Repository
@@ -24,15 +20,14 @@ public class ProductManager implements ProductDAO {
 
 
     @Override
-    public Product findProductByName(String name) {
-        Query query =  entityManager.createQuery("SELECT p FROM Product p WHERE p.name=:name", Product.class);
-        query.setParameter("name", name);
+    public Product findProductById(Long id) {
+        Product product = entityManager.find(Product.class, id);
 
-        if (query.getResultList().isEmpty()) {
+        if (product == null) {
             throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
         }
 
-        return (Product) query.getResultList().get(0);
+        return product;
     }
 
     @Override
@@ -57,7 +52,7 @@ public class ProductManager implements ProductDAO {
                 entityManager.persist(product);
                 return product;
             }
-        } catch (ConstraintViolationException e) {
+        } catch (PersistenceException e) {
             throw new ApplicationException(DbErrors.DUPLICATED_PRODUCT_NAME);
         }
     }
@@ -72,8 +67,8 @@ public class ProductManager implements ProductDAO {
     }
 
     @Override
-    public Product deleteProduct(String productName) {
-        Product product = findProductByName(productName);
+    public Product deleteProduct(Long id) {
+        Product product = findProductById(id);
 
         if (product == null) {
             throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);

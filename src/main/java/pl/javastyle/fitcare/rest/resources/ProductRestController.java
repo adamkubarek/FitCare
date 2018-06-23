@@ -23,9 +23,9 @@ public class ProductRestController {
         this.productService = productService;
     }
 
-    @GetMapping("products/{name}")
-    public ResponseEntity getProductByName(@PathVariable String name) {
-        return new ResponseEntity<>(productService.getProductByName(name), HttpStatus.OK);
+    @GetMapping("products/{id}")
+    public ResponseEntity getProductByName(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping("products")
@@ -65,8 +65,8 @@ public class ProductRestController {
         return new ResponseEntity<>(productService.updateProduct(product, productId), HttpStatus.OK);
     }
 
-    @DeleteMapping("products/{name}")
-    public ResponseEntity deleteProduct(@PathVariable String name) {
-        return new ResponseEntity<>(productService.deleteProduct(name), HttpStatus.OK);
+    @DeleteMapping("products/{id}")
+    public ResponseEntity deleteProduct(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.deleteProduct(id), HttpStatus.OK);
     }
 }

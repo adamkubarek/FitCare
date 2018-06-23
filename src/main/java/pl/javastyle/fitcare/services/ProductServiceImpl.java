@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductByName(String name) {
-        return mapper.domainToDto(productDAO.findProductByName(name));
+    public ProductDTO getProductById(Long id) {
+        return mapper.domainToDto(productDAO.findProductById(id));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO deleteProduct(String productName) {
-        return mapper.domainToDto(productDAO.deleteProduct(productName));
+    public ProductDTO deleteProduct(Long id) {
+        return mapper.domainToDto(productDAO.deleteProduct(id));
     }
 }

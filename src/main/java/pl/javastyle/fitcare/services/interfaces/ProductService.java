@@ -5,12 +5,12 @@ import pl.javastyle.fitcare.rest.dto.ProductDTO;
 import java.util.List;
 
 public interface ProductService {
-    ProductDTO getProductByName(String name);
+    ProductDTO getProductById(Long id);
     List<ProductDTO> getAllProducts();
     List<ProductDTO> sortAllProductsByCategory(List<ProductDTO> products);
     List<ProductDTO> sortAllProductsByName(List<ProductDTO> products);
     List<ProductDTO> sortAllProductsByCalories(List<ProductDTO> products);
     ProductDTO addNewProduct(ProductDTO product);
     ProductDTO updateProduct(ProductDTO product, Long productId);
-    ProductDTO deleteProduct(String productName);
+    ProductDTO deleteProduct(Long id);
 }
