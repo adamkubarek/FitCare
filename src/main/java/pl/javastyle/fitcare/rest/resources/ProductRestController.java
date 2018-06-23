@@ -8,7 +8,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
 import pl.javastyle.fitcare.services.interfaces.ProductService;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("api-v1")
@@ -21,9 +23,36 @@ public class ProductRestController {
         this.productService = productService;
     }
 
+    @GetMapping("products/{name}")
+    public ResponseEntity getProductByName(@PathVariable String name) {
+        return new ResponseEntity<>(productService.getProductByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping("products")
+    public ResponseEntity getAllProducts(@PathParam("sortBy") String sortedBy) {
+        List<ProductDTO> allProducts = productService.getAllProducts();
+
+        allProducts = pickSortMethod(sortedBy, allProducts);
+
+        return new ResponseEntity<>(allProducts, HttpStatus.OK);
+    }
+
+    private List<ProductDTO> pickSortMethod(String sortedBy, List<ProductDTO> allProducts) {
+        if ("name".equals(sortedBy)) {
+            allProducts = productService.sortAllProductsByName(allProducts);
+        } else if ("calories".equals(sortedBy)) {
+            allProducts = productService.sortAllProductsByCalories(allProducts);
+        } else if ("category".equals(sortedBy)) {
+            allProducts = productService.sortAllProductsByCategory(allProducts);
+        }
+
+        return allProducts;
+    }
+
     @PostMapping("products")
-    public ResponseEntity addNewProduct (@RequestBody ProductDTO product) {
+    public ResponseEntity addNewProduct(@RequestBody ProductDTO product) {
         ProductDTO savedProduct = productService.addNewProduct(product);
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedProduct.getId()).toUri();
@@ -32,8 +61,12 @@ public class ProductRestController {
     }
 
     @PutMapping("products/{productId}")
-    public ResponseEntity updateProduct (@RequestBody ProductDTO product, @PathVariable Long productId) {
-        ProductDTO updatedProduct = productService.updateProduct(product, productId);
-        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    public ResponseEntity updateProduct(@RequestBody ProductDTO product, @PathVariable Long productId) {
+        return new ResponseEntity<>(productService.updateProduct(product, productId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("products/{name}")
+    public ResponseEntity deleteProduct(@PathVariable String name) {
+        return new ResponseEntity<>(productService.deleteProduct(name), HttpStatus.OK);
     }
 }
