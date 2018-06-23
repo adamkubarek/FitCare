@@ -25,25 +25,25 @@ public class ProductServiceImplTest {
         firstProduct.setId(1L);
         firstProduct.setName("Banan");
         firstProduct.setCategory("Owoce");
-        firstProduct.setCalories(200);
+        firstProduct.setCalories(200D);
 
         ProductDTO secondProduct = new ProductDTO();
         secondProduct.setId(2L);
         secondProduct.setName("Kasza Gryczana");
         secondProduct.setCategory("Mąka, kasze, makarony");
-        secondProduct.setCalories(455);
+        secondProduct.setCalories(455D);
 
         ProductDTO thirdProduct = new ProductDTO();
         thirdProduct.setId(3L);
         thirdProduct.setName("Coca Cola");
         thirdProduct.setCategory("Napoje");
-        thirdProduct.setCalories(600);
+        thirdProduct.setCalories(600D);
 
         ProductDTO fourthProduct = new ProductDTO();
         fourthProduct.setId(4L);
         fourthProduct.setName("Taco");
         fourthProduct.setCategory("Gotowe posiłki");
-        fourthProduct.setCalories(150);
+        fourthProduct.setCalories(150D);
 
         products = Arrays.asList(
                 firstProduct,

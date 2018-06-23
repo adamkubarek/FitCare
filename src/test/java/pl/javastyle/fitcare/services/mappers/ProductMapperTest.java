@@ -28,10 +28,10 @@ public class ProductMapperTest {
         productDTO.setId(2L);
         productDTO.setName("Ryż");
         productDTO.setCategory("Kasze i ryże");
-        productDTO.setCarbs(70);
-        productDTO.setProtein(10);
-        productDTO.setFat(10);
-        productDTO.setCalories(410);
+        productDTO.setCarbs(70D);
+        productDTO.setProtein(10D);
+        productDTO.setFat(10D);
+        productDTO.setCalories(410D);
     }
 
     private void fillProductFields() {
@@ -41,10 +41,10 @@ public class ProductMapperTest {
         Category category = new Category();
         category.setName("Owoce");
         product.setCategory(category);
-        product.setCarbs(15);
-        product.setProtein(5);
-        product.setFat(10);
-        product.setCalories(170);
+        product.setCarbs(15D);
+        product.setProtein(5D);
+        product.setFat(10D);
+        product.setCalories(170D);
     }
 
     @Test

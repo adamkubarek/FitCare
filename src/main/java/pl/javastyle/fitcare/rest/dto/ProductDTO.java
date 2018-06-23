@@ -16,11 +16,11 @@ public class ProductDTO {
     @Getter @Setter
     private String category;
     @Getter @Setter
-    private double calories;
+    private Double calories;
     @Getter @Setter
-    private double protein;
+    private Double protein;
     @Getter @Setter
-    private double carbs;
+    private Double carbs;
     @Getter @Setter
-    private double fat;
+    private Double fat;
 }
