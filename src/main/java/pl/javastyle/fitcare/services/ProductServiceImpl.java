@@ -27,38 +27,42 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO addNewProduct(ProductDTO productDTO) {
-        Product addedProduct = productDAO.saveProduct(mapper.dtoToProduct(productDTO));
-        return mapper.productToDto(addedProduct);
+    public ProductDTO getProductByName(String name) {
+        return mapper.productToDto(productDAO.findProductByName(name));
     }
 
     @Override
-    public ProductDTO deleteProduct(Product product) {
-        return mapper.productToDto(productDAO.deleteProduct(product.getId()));
-    }
-
-    @Override
-    public List<ProductDTO> sortAllProductsByCategory() {
+    public List<ProductDTO> getAllProducts() {
         return productDAO.getAllProducts().stream()
                 .map(mapper::productToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDTO> sortAllProductsByCategory(List<ProductDTO> products) {
+        return products.stream()
                 .sorted(Comparator.comparing(ProductDTO::getCategory))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ProductDTO> sortAllProductsByName() {
-        return productDAO.getAllProducts().stream()
-                .map(mapper::productToDto)
+    public List<ProductDTO> sortAllProductsByName(List<ProductDTO> products) {
+        return products.stream()
                 .sorted(Comparator.comparing(ProductDTO::getName))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ProductDTO> sortAllProductsByCalories() {
-        return productDAO.getAllProducts().stream()
-                .map(mapper::productToDto)
+    public List<ProductDTO> sortAllProductsByCalories(List<ProductDTO> products) {
+        return products.stream()
                 .sorted(Comparator.comparing(ProductDTO::getCalories, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDTO addNewProduct(ProductDTO productDTO) {
+        Product addedProduct = productDAO.saveProduct(mapper.dtoToProduct(productDTO));
+        return mapper.productToDto(addedProduct);
     }
 
     @Override
@@ -66,5 +70,10 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setId(productId);
         Product savedProduct = productDAO.saveProduct(mapper.dtoToProduct(productDTO));
         return mapper.productToDto(savedProduct);
+    }
+
+    @Override
+    public ProductDTO deleteProduct(String productName) {
+        return mapper.productToDto(productDAO.deleteProduct(productName));
     }
 }

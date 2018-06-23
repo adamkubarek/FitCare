@@ -1,15 +1,16 @@
 package pl.javastyle.fitcare.services.interfaces;
 
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
-import pl.javastyle.fitcare.domain.Product;
 
 import java.util.List;
 
 public interface ProductService {
+    ProductDTO getProductByName(String name);
+    List<ProductDTO> getAllProducts();
+    List<ProductDTO> sortAllProductsByCategory(List<ProductDTO> products);
+    List<ProductDTO> sortAllProductsByName(List<ProductDTO> products);
+    List<ProductDTO> sortAllProductsByCalories(List<ProductDTO> products);
     ProductDTO addNewProduct(ProductDTO product);
-    ProductDTO deleteProduct(Product product);
-    List<ProductDTO> sortAllProductsByCategory();
-    List<ProductDTO> sortAllProductsByName();
-    List<ProductDTO> sortAllProductsByCalories();
     ProductDTO updateProduct(ProductDTO product, Long productId);
+    ProductDTO deleteProduct(String productName);
 }
