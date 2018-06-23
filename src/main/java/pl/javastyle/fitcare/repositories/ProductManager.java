@@ -26,6 +26,7 @@ public class ProductManager implements ProductDAO {
     public Product saveProduct(Product product) {
         try {
             setCategoryIfAlreadyExists(product);
+
             if (product.isPersisted()) {
                 return entityManager.merge(product);
             } else {
@@ -40,6 +41,7 @@ public class ProductManager implements ProductDAO {
     private void setCategoryIfAlreadyExists(Product product) {
         Query query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
         query.setParameter("name", product.getCategory().getName());
+
         if (!query.getResultList().isEmpty()) {
             product.setCategory((Category) query.getSingleResult());
         }
@@ -48,41 +50,46 @@ public class ProductManager implements ProductDAO {
     @Override
     public Product findProductById(Long productId) {
         Product product = entityManager.find(Product.class, productId);
-        if (product != null) {
-            return product;
+
+        if (product == null) {
+            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
         }
-        throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
+
+        return product;
     }
 
     @Override
     public Product deleteProduct(Long productId) {
         Product product = entityManager.find(Product.class, productId);
-        if (product != null) {
-            entityManager.remove(product);
-            return product;
-        } else {
+
+        if (product == null) {
             throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
         }
+
+        entityManager.remove(product);
+        return product;
     }
 
     @Override
     public List<Product> getAllProducts() {
         TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
+
         if (query.getResultList().isEmpty()) {
             throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
-        } else {
-            return query.getResultList();
         }
+
+        return query.getResultList();
     }
 
     @Override
     public Product findProductByName(String name) {
         Query query =  entityManager.createQuery("SELECT p FROM Product p WHERE p.name=:name", Product.class);
         query.setParameter("name", name);
+
         if (query.getResultList().isEmpty()) {
             throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
-        } else {
-            return (Product) query.getResultList().get(0);
         }
+
+        return (Product) query.getResultList().get(0);
     }
 }

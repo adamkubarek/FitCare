@@ -20,6 +20,7 @@ public class CategoryManager implements CategoryDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     @Override
     public Category saveCategory(Category category) {
         try {
@@ -43,11 +44,12 @@ public class CategoryManager implements CategoryDAO {
     public Category findCategoryByName(String name) {
         Query query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
         query.setParameter("name", name);
+
         if (query.getResultList().isEmpty()) {
             throw new ApplicationException(DbErrors.CATEGORY_NOT_FOUND);
-        } else {
-            return (Category) query.getSingleResult();
         }
+            
+        return (Category) query.getSingleResult();
     }
 
     @Override
