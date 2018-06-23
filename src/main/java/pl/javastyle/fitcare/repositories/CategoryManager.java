@@ -9,8 +9,8 @@ import pl.javastyle.fitcare.repositories.interfaces.CategoryDAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.validation.ConstraintViolationException;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class CategoryManager implements CategoryDAO {
                 entityManager.persist(category);
                 return category;
             }
-        } catch (ConstraintViolationException e) {
+        } catch (PersistenceException e) {
             throw new ApplicationException(DbErrors.DUPLICATED_CATEGORY_NAME);
         }
     }
