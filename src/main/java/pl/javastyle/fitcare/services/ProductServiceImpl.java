@@ -7,6 +7,7 @@ import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
 import pl.javastyle.fitcare.services.interfaces.ProductService;
+import pl.javastyle.fitcare.services.mappers.Mapper;
 import pl.javastyle.fitcare.services.mappers.ProductMapper;
 
 import java.util.Comparator;
@@ -18,23 +19,23 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO;
-    private ProductMapper mapper;
+    private Mapper<Product, ProductDTO> mapper;
 
     @Autowired
-    public ProductServiceImpl(ProductDAO productDAO, ProductMapper mapper) {
+    public ProductServiceImpl(ProductDAO productDAO) {
         this.productDAO = productDAO;
-        this.mapper = mapper;
+        this.mapper = new ProductMapper();
     }
 
     @Override
     public ProductDTO getProductByName(String name) {
-        return mapper.productToDto(productDAO.findProductByName(name));
+        return mapper.domainToDto(productDAO.findProductByName(name));
     }
 
     @Override
     public List<ProductDTO> getAllProducts() {
         return productDAO.getAllProducts().stream()
-                .map(mapper::productToDto)
+                .map(mapper::domainToDto)
                 .collect(Collectors.toList());
     }
 
@@ -61,19 +62,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addNewProduct(ProductDTO productDTO) {
-        Product addedProduct = productDAO.saveProduct(mapper.dtoToProduct(productDTO));
-        return mapper.productToDto(addedProduct);
+        Product addedProduct = productDAO.saveProduct(mapper.dtoToDomain(productDTO));
+        return mapper.domainToDto(addedProduct);
     }
 
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO, Long productId) {
         productDTO.setId(productId);
-        Product savedProduct = productDAO.saveProduct(mapper.dtoToProduct(productDTO));
-        return mapper.productToDto(savedProduct);
+        Product savedProduct = productDAO.saveProduct(mapper.dtoToDomain(productDTO));
+        return mapper.domainToDto(savedProduct);
     }
 
     @Override
     public ProductDTO deleteProduct(String productName) {
-        return mapper.productToDto(productDAO.deleteProduct(productName));
+        return mapper.domainToDto(productDAO.deleteProduct(productName));
     }
 }

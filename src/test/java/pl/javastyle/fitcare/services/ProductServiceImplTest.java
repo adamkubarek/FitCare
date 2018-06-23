@@ -19,7 +19,7 @@ public class ProductServiceImplTest {
 
     @Before
     public void setup() {
-        productService = new ProductServiceImpl(null, null);
+        productService = new ProductServiceImpl(null);
 
         ProductDTO firstProduct = new ProductDTO();
         firstProduct.setId(1L);
