@@ -12,6 +12,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter

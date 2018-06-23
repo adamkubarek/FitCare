@@ -13,6 +13,7 @@ import java.util.List;
 @ToString(exclude = "products")
 @NoArgsConstructor
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter

@@ -18,6 +18,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class ProductManager implements ProductDAO {
+
     @PersistenceContext
     private EntityManager entityManager;
 

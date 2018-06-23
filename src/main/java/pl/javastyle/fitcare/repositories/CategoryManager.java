@@ -17,6 +17,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class CategoryManager implements CategoryDAO {
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -48,7 +49,7 @@ public class CategoryManager implements CategoryDAO {
         if (query.getResultList().isEmpty()) {
             throw new ApplicationException(DbErrors.CATEGORY_NOT_FOUND);
         }
-            
+
         return (Category) query.getSingleResult();
     }
 

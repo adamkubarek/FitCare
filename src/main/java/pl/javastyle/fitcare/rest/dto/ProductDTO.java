@@ -7,6 +7,7 @@ import lombok.ToString;
 
 @ToString
 public class ProductDTO {
+
     @Getter @Setter
     @JsonIgnore
     private Long id;
