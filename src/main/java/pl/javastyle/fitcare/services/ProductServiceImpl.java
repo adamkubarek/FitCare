@@ -11,7 +11,6 @@ import pl.javastyle.fitcare.services.interfaces.ProductService;
 import pl.javastyle.fitcare.services.mappers.Mapper;
 import pl.javastyle.fitcare.services.mappers.ProductMapper;
 
-import javax.validation.constraints.NotNull;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
