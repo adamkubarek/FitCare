@@ -90,10 +90,10 @@ public class ProductRestController {
     }
 
     private String buildMessageFromBindingResult(BindingResult result) {
-        StringBuilder errorMessage = new StringBuilder();
+        StringBuilder allErrorMessages = new StringBuilder();
 
         for (ObjectError error : result.getAllErrors()) {
-            errorMessage
+            allErrorMessages
                     .append("Given field '")
                     .append(((FieldError)error).getField())
                     .append("' ")
@@ -101,7 +101,7 @@ public class ProductRestController {
                     .append("\n\n");
         }
 
-        return errorMessage.toString();
+        return allErrorMessages.toString();
     }
 
     @PatchMapping("products/{productId}")
