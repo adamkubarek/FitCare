@@ -15,9 +15,7 @@ public class ProductMapper implements Mapper<Product, ProductDTO> {
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setCalories(productDTO.getCalories());
-        product.setCarbs(productDTO.getCarbs());
-        product.setProtein(productDTO.getProtein());
-        product.setFat(productDTO.getFat());
+        product.setMacronutrients(productDTO.getMacronutrients());
 
         Category category = new Category();
         category.setName(productDTO.getCategory());
@@ -31,12 +29,10 @@ public class ProductMapper implements Mapper<Product, ProductDTO> {
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setId(product.getId());
-        productDTO.setCalories(product.getCalories());
-        productDTO.setCarbs(product.getCarbs());
-        productDTO.setCategory(product.getCategory().getName());
-        productDTO.setFat(product.getFat());
         productDTO.setName(product.getName());
-        productDTO.setProtein(product.getProtein());
+        productDTO.setCalories(product.getCalories());
+        productDTO.setMacronutrients(product.getMacronutrients());
+        productDTO.setCategory(product.getCategory().getName());
 
         return productDTO;
     }

@@ -3,6 +3,7 @@ package pl.javastyle.fitcare.services.mappers;
 import org.junit.Before;
 import org.junit.Test;
 import pl.javastyle.fitcare.domain.Category;
+import pl.javastyle.fitcare.domain.Macronutrients;
 import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
 
@@ -28,9 +29,7 @@ public class ProductMapperTest {
         productDTO.setId(2L);
         productDTO.setName("Ryż");
         productDTO.setCategory("Kasze i ryże");
-        productDTO.setCarbs(70D);
-        productDTO.setProtein(10D);
-        productDTO.setFat(10D);
+        productDTO.setMacronutrients(new Macronutrients(10D,70D,10D));
         productDTO.setCalories(410D);
     }
 
@@ -41,9 +40,7 @@ public class ProductMapperTest {
         Category category = new Category();
         category.setName("Owoce");
         product.setCategory(category);
-        product.setCarbs(15D);
-        product.setProtein(5D);
-        product.setFat(10D);
+        product.setMacronutrients(new Macronutrients(5D,15D,10D));
         product.setCalories(170D);
     }
 
@@ -54,9 +51,7 @@ public class ProductMapperTest {
         assertEquals(productDTO.getId(), result.getId());
         assertEquals(productDTO.getName(), result.getName());
         assertEquals(productDTO.getCategory(), result.getCategory().getName());
-        assertEquals(productDTO.getCarbs(), result.getCarbs(), 0.001);
-        assertEquals(productDTO.getProtein(), result.getProtein(), 0.001);
-        assertEquals(productDTO.getFat(), result.getFat(), 0.001);
+        assertEquals(productDTO.getMacronutrients(), result.getMacronutrients());
         assertEquals(productDTO.getCalories(), result.getCalories(), 0.001);
     }
 
@@ -66,9 +61,7 @@ public class ProductMapperTest {
 
         assertEquals(product.getCategory().getName(), result.getCategory());
         assertEquals(product.getName(), result.getName());
-        assertEquals(product.getCarbs(), result.getCarbs(), 0.001);
-        assertEquals(product.getProtein(), result.getProtein(), 0.001);
-        assertEquals(product.getFat(), result.getFat(), 0.001);
+        assertEquals(product.getMacronutrients(), result.getMacronutrients());
         assertEquals(product.getCalories(), result.getCalories(), 0.001);
     }
 }
