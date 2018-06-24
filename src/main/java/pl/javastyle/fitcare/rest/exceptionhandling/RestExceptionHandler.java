@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.javastyle.fitcare.exceptions.ApplicationError;
 import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
+import pl.javastyle.fitcare.exceptions.ValidationErrors;
 
 @ControllerAdvice
 public class RestExceptionHandler {
@@ -24,11 +25,12 @@ public class RestExceptionHandler {
     private HttpStatus determineHttpStatusResponse(ApplicationError error) {
         HttpStatus httpStatus = HttpStatus.OK;
 
-        if(error.equals(DbErrors.PRODUCT_NOT_FOUND)) {
+        if (error.equals(DbErrors.PRODUCT_NOT_FOUND)) {
             httpStatus = HttpStatus.NOT_FOUND;
-        } else if (error.equals(DbErrors.DUPLICATED_PRODUCT_NAME)) {
+        } else if (error.equals(DbErrors.DUPLICATED_PRODUCT_NAME) || error.equals(ValidationErrors.NOT_VALID)) {
             httpStatus = HttpStatus.BAD_REQUEST;
         }
+
         return httpStatus;
     }
 }

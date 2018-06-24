@@ -3,11 +3,17 @@ package pl.javastyle.fitcare.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pl.javastyle.fitcare.exceptions.ApplicationException;
+import pl.javastyle.fitcare.exceptions.ValidationErrors;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
 import pl.javastyle.fitcare.services.interfaces.ProductService;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
@@ -50,7 +56,11 @@ public class ProductRestController {
     }
 
     @PostMapping("products")
-    public ResponseEntity addNewProduct(@RequestBody ProductDTO product) {
+    public ResponseEntity addNewProduct(@RequestBody @Valid ProductDTO product, BindingResult result) {
+        if (result.hasErrors()) {
+            throwExceptionWithProperMessage(result);
+        }
+
         ProductDTO savedProduct = productService.addNewProduct(product);
 
         URI location = ServletUriComponentsBuilder
@@ -61,8 +71,37 @@ public class ProductRestController {
     }
 
     @PutMapping("products/{productId}")
-    public ResponseEntity updateProduct(@RequestBody ProductDTO product, @PathVariable Long productId) {
+    public ResponseEntity updateProduct(
+            @RequestBody @Valid ProductDTO product,
+            BindingResult result,
+            @PathVariable Long productId) {
+
+        if (result.hasErrors()) {
+            throwExceptionWithProperMessage(result);
+        }
         return new ResponseEntity<>(productService.updateProduct(product, productId), HttpStatus.OK);
+    }
+
+    private void throwExceptionWithProperMessage(BindingResult result) {
+        String errorMessage = buildMessageFromBindingResult(result);
+
+        ValidationErrors.NOT_VALID.setDescription(errorMessage);
+        throw new ApplicationException(ValidationErrors.NOT_VALID);
+    }
+
+    private String buildMessageFromBindingResult(BindingResult result) {
+        StringBuilder errorMessage = new StringBuilder();
+
+        for (ObjectError error : result.getAllErrors()) {
+            errorMessage
+                    .append("Given field '")
+                    .append(((FieldError)error).getField())
+                    .append("' ")
+                    .append(error.getDefaultMessage())
+                    .append("\n\n");
+        }
+
+        return errorMessage.toString();
     }
 
     @PatchMapping("products/{productId}")

@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.javastyle.fitcare.domain.Macronutrients;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @ToString
 public class ProductDTO {
@@ -12,15 +17,15 @@ public class ProductDTO {
     @JsonIgnore
     private Long id;
     @Getter @Setter
+    @NotBlank
     private String name;
     @Getter @Setter
+    @NotBlank
     private String category;
     @Getter @Setter
+    @NotNull
     private Double calories;
     @Getter @Setter
-    private Double protein;
-    @Getter @Setter
-    private Double carbs;
-    @Getter @Setter
-    private Double fat;
+    @Valid
+    private Macronutrients macronutrients;
 }
