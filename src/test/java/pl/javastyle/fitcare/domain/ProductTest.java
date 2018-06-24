@@ -15,14 +15,14 @@ public class ProductTest {
     }
 
     @Test
-    public void shouldBePersisted() {
+    public void shouldBePersistedWhenIdIsSet() {
         this.product.setId(1L);
 
         assertTrue(this.product.isPersisted());
     }
 
     @Test
-    public void shouldNotBePersisted() {
+    public void shouldNotBePersistedWhenIdIsNotSet() {
         this.product.setId(null);
 
         assertFalse(this.product.isPersisted());

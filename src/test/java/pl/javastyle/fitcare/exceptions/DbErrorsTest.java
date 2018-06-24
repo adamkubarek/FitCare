@@ -7,11 +7,13 @@ import static org.junit.Assert.*;
 public class DbErrorsTest {
 
     @Test
-    public void shouldReturnProperNameWhenThrowingException() {
+    public void shouldReturnProperErrorNameWhenThrowingException() {
         try {
             throw new ApplicationException(DbErrors.CATEGORY_NOT_FOUND);
-        } catch (ApplicationException e) {
-            assertEquals(DbErrors.CATEGORY_NOT_FOUND, e.getError());
+        } catch (ApplicationException exception) {
+            ApplicationError result = exception.getError();
+
+            assertEquals(DbErrors.CATEGORY_NOT_FOUND, result);
         }
     }
 }
