@@ -71,11 +71,7 @@ public class ProductRestController {
     }
 
     @PutMapping("products/{productId}")
-    public ResponseEntity updateProduct(
-            @RequestBody @Valid ProductDTO product,
-            BindingResult result,
-            @PathVariable Long productId) {
-
+    public ResponseEntity updateProduct(@RequestBody @Valid ProductDTO product, BindingResult result, @PathVariable Long productId) {
         if (result.hasErrors()) {
             throwExceptionWithProperMessage(result);
         }
