@@ -7,10 +7,7 @@ import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
 import pl.javastyle.fitcare.repositories.interfaces.CategoryDAO;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,14 +40,14 @@ public class CategoryManager implements CategoryDAO {
 
     @Override
     public Category findCategoryByName(String name) {
-        Query query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
+        TypedQuery<Category> query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
         query.setParameter("name", name);
 
         if (query.getResultList().isEmpty()) {
             throw new ApplicationException(DbErrors.CATEGORY_NOT_FOUND);
         }
 
-        return (Category) query.getSingleResult();
+        return query.getSingleResult();
     }
 
     @Override

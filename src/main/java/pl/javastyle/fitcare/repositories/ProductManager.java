@@ -35,7 +35,7 @@ public class ProductManager implements ProductDAO {
         TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
 
         if (query.getResultList().isEmpty()) {
-            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
+            throw new ApplicationException(DbErrors.PRODUCTS_NOT_FOUND);
         }
 
         return query.getResultList();
@@ -58,11 +58,11 @@ public class ProductManager implements ProductDAO {
     }
 
     private void setCategoryIfAlreadyExists(Product product) {
-        Query query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
+        TypedQuery<Category> query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
         query.setParameter("name", product.getCategory().getName());
 
         if (!query.getResultList().isEmpty()) {
-            product.setCategory((Category) query.getSingleResult());
+            product.setCategory(query.getSingleResult());
         }
     }
 
