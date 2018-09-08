@@ -4,13 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.javastyle.fitcare.exceptions.ApplicationException;
-import pl.javastyle.fitcare.exceptions.ValidationErrors;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
+import pl.javastyle.fitcare.rest.exceptionhandling.BindingResultExceptionBuilder;
 import pl.javastyle.fitcare.services.interfaces.ProductService;
 
 import javax.validation.Valid;
@@ -38,12 +35,12 @@ public class ProductRestController {
     public ResponseEntity getAllProducts(@PathParam("sortBy") String sortedBy) {
         List<ProductDTO> allProducts = productService.getAllProducts();
 
-        allProducts = pickSortMethod(sortedBy, allProducts);
+        allProducts = sortByGivenItem(sortedBy, allProducts);
 
         return new ResponseEntity<>(allProducts, HttpStatus.OK);
     }
 
-    private List<ProductDTO> pickSortMethod(String sortedBy, List<ProductDTO> allProducts) {
+    private List<ProductDTO> sortByGivenItem(String sortedBy, List<ProductDTO> allProducts) {
         if ("name".equals(sortedBy)) {
             allProducts = productService.sortAllProductsByName(allProducts);
         } else if ("calories".equals(sortedBy)) {
@@ -58,7 +55,7 @@ public class ProductRestController {
     @PostMapping("products")
     public ResponseEntity addNewProduct(@RequestBody @Valid ProductDTO product, BindingResult result) {
         if (result.hasErrors()) {
-            throwExceptionWithProperMessage(result);
+            new BindingResultExceptionBuilder(result).processValidationExceptionHandling();
         }
 
         ProductDTO savedProduct = productService.addNewProduct(product);
@@ -73,31 +70,10 @@ public class ProductRestController {
     @PutMapping("products/{productId}")
     public ResponseEntity updateProduct(@RequestBody @Valid ProductDTO product, BindingResult result, @PathVariable Long productId) {
         if (result.hasErrors()) {
-            throwExceptionWithProperMessage(result);
+            new BindingResultExceptionBuilder(result).processValidationExceptionHandling();
         }
+
         return new ResponseEntity<>(productService.updateProduct(product, productId), HttpStatus.OK);
-    }
-
-    private void throwExceptionWithProperMessage(BindingResult result) {
-        String errorMessage = buildMessageFromBindingResult(result);
-
-        ValidationErrors.NOT_VALID.setDescription(errorMessage);
-        throw new ApplicationException(ValidationErrors.NOT_VALID);
-    }
-
-    private String buildMessageFromBindingResult(BindingResult result) {
-        StringBuilder allErrorMessages = new StringBuilder();
-
-        for (ObjectError error : result.getAllErrors()) {
-            allErrorMessages
-                    .append("Given field '")
-                    .append(((FieldError)error).getField())
-                    .append("' ")
-                    .append(error.getDefaultMessage())
-                    .append("\n\n");
-        }
-
-        return allErrorMessages.toString();
     }
 
     @PatchMapping("products/{productId}")
