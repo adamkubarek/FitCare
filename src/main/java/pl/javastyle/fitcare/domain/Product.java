@@ -8,29 +8,29 @@ import pl.javastyle.fitcare.rest.dto.ProductDTO;
 
 import javax.persistence.*;
 
+@Table(name = "products")
 @Entity
-@Table(name = "Products")
-@ToString
+@Getter
+@Setter
+@ToString(exclude = {"user", "category"})
 @NoArgsConstructor
-public class Product {
-
+public class Product implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private Long id;
+
     @Column(unique = true)
-    @Getter @Setter
     private String name;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @Getter @Setter
     private Category category;
-    @Getter @Setter
     private Double calories;
     @Embedded
-    @Getter @Setter
     private Macronutrients macronutrients;
 
+    @ManyToOne
+    private User user;
 
+    @Override
     public boolean isPersisted() {
         return this.getId() != null;
     }

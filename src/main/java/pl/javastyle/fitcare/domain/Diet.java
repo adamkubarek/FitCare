@@ -1,31 +1,32 @@
 package pl.javastyle.fitcare.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
-@Table(name = "categories")
+@Table(name = "diets")
 @Entity
 @Getter
 @Setter
-@ToString(exclude = {"user", "products"})
-@NoArgsConstructor
-public class Category implements BaseEntity {
+@ToString(exclude = {"user", "productList"})
+public class Diet implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String name;
-    private String description;
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    private LocalDate creationDate;
+    private LocalDate executionDate;
+
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "diet")
+    private List<MeasuredProduct> productList;
 
     @Override
     public boolean isPersisted() {

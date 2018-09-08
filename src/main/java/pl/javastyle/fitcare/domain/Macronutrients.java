@@ -5,20 +5,19 @@ import lombok.*;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
+@Embeddable
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Embeddable
 public class Macronutrients {
 
-    @Getter @Setter
     @NotNull
     private Double protein;
-    @Getter @Setter
     @NotNull
     private Double carbohydrates;
-    @Getter @Setter
     @NotNull
     private Double fat;
 }
