@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(Long id) {
-        return mapper.domainToDto(productDAO.findProductById(id));
+        return mapper.domainToDto(productDAO.read(id));
     }
 
     @Override
@@ -62,28 +62,28 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addNewProduct(ProductDTO productDTO) {
-        Product addedProduct = productDAO.saveProduct(mapper.dtoToDomain(productDTO));
+        Product addedProduct = productDAO.save(mapper.dtoToDomain(productDTO));
         return mapper.domainToDto(addedProduct);
     }
 
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO, Long productId) {
         productDTO.setId(productId);
-        Product savedProduct = productDAO.saveProduct(mapper.dtoToDomain(productDTO));
+        Product savedProduct = productDAO.save(mapper.dtoToDomain(productDTO));
         return mapper.domainToDto(savedProduct);
     }
 
     @Override
     public ProductDTO patchProduct(ProductDTO patcher, Long productId) {
-        Product product = productDAO.findProductById(productId);
+        Product product = productDAO.read(productId);
 
         product.fillWithPatcherProperties(patcher);
 
-        return mapper.domainToDto(productDAO.saveProduct(product));
+        return mapper.domainToDto(productDAO.save(product));
     }
 
     @Override
     public ProductDTO deleteProduct(Long id) {
-        return mapper.domainToDto(productDAO.deleteProduct(id));
+        return mapper.domainToDto(productDAO.delete(id));
     }
 }
