@@ -6,6 +6,7 @@ spring:
         url: jdbc:mysql://vm:3306/fitcare?useSSL=false&useUnicode=true&characterEncoding=utf-8
         username: developer
         password: ${MYSQL_DB_PASS}
+        initialization-mode: always
 
     jpa:
         hibernate:
