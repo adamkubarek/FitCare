@@ -5,8 +5,8 @@ import pl.javastyle.fitcare.domain.Product;
 import java.util.List;
 
 public interface ProductDAO {
-    Product findProductById(Long id);
+    Product save(Product product);
+    Product read(Long id);
     List<Product> getAllProducts();
-    Product saveProduct(Product product);
-    Product deleteProduct(Long id);
+    Product delete(Long id);
 }

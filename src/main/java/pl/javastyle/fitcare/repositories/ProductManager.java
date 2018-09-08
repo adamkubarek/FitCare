@@ -8,26 +8,16 @@ import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
 import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
 
-import javax.persistence.*;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 @Transactional
-public class ProductManager implements ProductDAO {
+public class ProductManager extends AbstractCrudOperations<Product> implements ProductDAO {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-
-    @Override
-    public Product findProductById(Long id) {
-        Product product = entityManager.find(Product.class, id);
-
-        if (product == null) {
-            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
-        }
-
-        return product;
+    public ProductManager() {
+        super(Product.class);
     }
 
     @Override
@@ -35,23 +25,17 @@ public class ProductManager implements ProductDAO {
         TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
 
         if (query.getResultList().isEmpty()) {
-            throw new ApplicationException(DbErrors.PRODUCTS_NOT_FOUND);
+            throw new ApplicationException(DbErrors.ITEMS_NOT_FOUND);
         }
 
         return query.getResultList();
     }
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product save(Product product) {
+        setCategoryIfAlreadyExists(product);
         try {
-            setCategoryIfAlreadyExists(product);
-
-            if (product.isPersisted()) {
-                return entityManager.merge(product);
-            } else {
-                entityManager.persist(product);
-                return product;
-            }
+            return super.save(product);
         } catch (PersistenceException e) {
             throw new ApplicationException(DbErrors.DUPLICATED_PRODUCT_NAME);
         }
@@ -64,17 +48,5 @@ public class ProductManager implements ProductDAO {
         if (!query.getResultList().isEmpty()) {
             product.setCategory(query.getSingleResult());
         }
-    }
-
-    @Override
-    public Product deleteProduct(Long id) {
-        Product product = findProductById(id);
-
-        if (product == null) {
-            throw new ApplicationException(DbErrors.PRODUCT_NOT_FOUND);
-        }
-
-        entityManager.remove(product);
-        return product;
     }
 }

@@ -7,35 +7,25 @@ import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
 import pl.javastyle.fitcare.repositories.interfaces.CategoryDAO;
 
-import javax.persistence.*;
-import java.util.Collections;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 @Transactional
-public class CategoryManager implements CategoryDAO {
+public class CategoryManager extends AbstractCrudOperations<Category> implements CategoryDAO {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-
-    @Override
-    public Category saveCategory(Category category) {
-        try {
-            if (category.isPersisted()) {
-                return entityManager.merge(category);
-            } else {
-                entityManager.persist(category);
-                return category;
-            }
-        } catch (PersistenceException e) {
-            throw new ApplicationException(DbErrors.DUPLICATED_CATEGORY_NAME);
-        }
+    public CategoryManager() {
+        super(Category.class);
     }
 
     @Override
-    public Category findCategoryById(Long categoryId) {
-        return entityManager.find(Category.class, categoryId);
+    public Category save(Category item) {
+        try {
+            return super.save(item);
+        } catch (PersistenceException e) {
+            throw new ApplicationException(DbErrors.DUPLICATED_CATEGORY_NAME);
+        }
     }
 
     @Override
@@ -44,19 +34,19 @@ public class CategoryManager implements CategoryDAO {
         query.setParameter("name", name);
 
         if (query.getResultList().isEmpty()) {
-            throw new ApplicationException(DbErrors.CATEGORY_NOT_FOUND);
+            throw new ApplicationException(DbErrors.ITEM_NOT_FOUND);
         }
 
         return query.getSingleResult();
     }
 
     @Override
-    public Category deleteCategory(Long categoryId) {
-        return null;
-    }
-
-    @Override
     public List<Category> getAllCategories() {
-        return Collections.emptyList();
+        TypedQuery<Category> query = entityManager.createQuery("select c from Category c", Category.class);
+        if (query.getResultList().isEmpty()) {
+            throw new ApplicationException(DbErrors.ITEMS_NOT_FOUND);
+        }
+
+        return query.getResultList();
     }
 }
