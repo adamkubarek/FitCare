@@ -4,9 +4,6 @@ import pl.javastyle.fitcare.domain.Product;
 
 import java.util.List;
 
-public interface ProductDAO {
-    Product save(Product product);
-    Product read(Long id);
+public interface ProductDAO extends CrudBaseOperations<Product> {
     List<Product> getAllProducts();
-    Product delete(Long id);
 }
