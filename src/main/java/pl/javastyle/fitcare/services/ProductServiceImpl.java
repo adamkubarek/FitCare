@@ -7,7 +7,7 @@ import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
 import pl.javastyle.fitcare.services.interfaces.ProductService;
-import pl.javastyle.fitcare.services.mappers.Mapper;
+import pl.javastyle.fitcare.commons.services.Mapper;
 import pl.javastyle.fitcare.services.mappers.ProductMapper;
 
 import java.util.Comparator;

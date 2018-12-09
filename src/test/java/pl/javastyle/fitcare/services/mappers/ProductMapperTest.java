@@ -2,6 +2,7 @@ package pl.javastyle.fitcare.services.mappers;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.javastyle.fitcare.commons.services.Mapper;
 import pl.javastyle.fitcare.domain.Category;
 import pl.javastyle.fitcare.domain.Macronutrients;
 import pl.javastyle.fitcare.domain.Product;

@@ -1,9 +1,9 @@
-package pl.javastyle.fitcare.repositories;
+package pl.javastyle.fitcare.commons.repositories;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-import pl.javastyle.fitcare.domain.BaseEntity;
+import pl.javastyle.fitcare.commons.domain.BaseEntity;
 import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
 
@@ -17,7 +17,7 @@ public abstract class AbstractCrudOperations<T extends BaseEntity> {
     @PersistenceContext
     protected EntityManager entityManager;
 
-    AbstractCrudOperations(Class<T> typeParameterClass) {
+    public AbstractCrudOperations(Class<T> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
     }
 

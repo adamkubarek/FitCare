@@ -2,6 +2,7 @@ package pl.javastyle.fitcare.repositories;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.javastyle.fitcare.commons.repositories.AbstractCrudOperations;
 import pl.javastyle.fitcare.domain.Category;
 import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.exceptions.ApplicationException;

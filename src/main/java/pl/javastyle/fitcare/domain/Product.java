@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import pl.javastyle.fitcare.commons.domain.BaseEntity;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package pl.javastyle.fitcare.domain;
+package pl.javastyle.fitcare.commons.domain;
 
 public interface BaseEntity {
 
