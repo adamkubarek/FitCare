@@ -6,12 +6,10 @@ import java.util.List;
 
 public interface ProductService {
     ProductDTO getProductById(Long id);
-    List<ProductDTO> getAllProducts();
-    List<ProductDTO> sortAllProductsByCategory(List<ProductDTO> products);
-    List<ProductDTO> sortAllProductsByName(List<ProductDTO> products);
-    List<ProductDTO> sortAllProductsByCalories(List<ProductDTO> products);
+    List<ProductDTO> getSortedProducts(String sortedBy);
     ProductDTO addNewProduct(ProductDTO product);
     ProductDTO updateProduct(ProductDTO product, Long productId);
     ProductDTO patchProduct(ProductDTO patcher, Long productId);
     ProductDTO deleteProduct(Long id);
+
 }

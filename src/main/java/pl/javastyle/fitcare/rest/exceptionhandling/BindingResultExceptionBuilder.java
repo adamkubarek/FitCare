@@ -13,7 +13,7 @@ public class BindingResultExceptionBuilder {
         this.bindingResult = result;
     }
 
-    public void processValidationExceptionHandling() {
+    public void buildException() {
         String errorMessage = buildMessageFromBindingResult(this.bindingResult);
         ValidationErrors.NOT_VALID.setDescription(errorMessage);
 

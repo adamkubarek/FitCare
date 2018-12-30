@@ -3,11 +3,11 @@ package pl.javastyle.fitcare.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.javastyle.fitcare.commons.services.Mapper;
 import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
 import pl.javastyle.fitcare.rest.dto.ProductDTO;
 import pl.javastyle.fitcare.services.interfaces.ProductService;
-import pl.javastyle.fitcare.commons.services.Mapper;
 import pl.javastyle.fitcare.services.mappers.ProductMapper;
 
 import java.util.Comparator;
@@ -30,34 +30,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO getProductById(Long id) {
         return mapper.domainToDto(productDAO.read(id));
-    }
-
-    @Override
-    public List<ProductDTO> getAllProducts() {
-        return productDAO.getAllProducts().stream()
-                .map(mapper::domainToDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ProductDTO> sortAllProductsByCategory(List<ProductDTO> products) {
-        return products.stream()
-                .sorted(Comparator.comparing(ProductDTO::getCategory))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ProductDTO> sortAllProductsByName(List<ProductDTO> products) {
-        return products.stream()
-                .sorted(Comparator.comparing(ProductDTO::getName))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ProductDTO> sortAllProductsByCalories(List<ProductDTO> products) {
-        return products.stream()
-                .sorted(Comparator.comparing(ProductDTO::getCalories, Comparator.reverseOrder()))
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -86,4 +58,44 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO deleteProduct(Long id) {
         return mapper.domainToDto(productDAO.delete(id));
     }
+
+    @Override
+    public List<ProductDTO> getSortedProducts(String sortedBy) {
+        List<ProductDTO> allProducts = getAllProducts();
+        switch (sortedBy) {
+            case "name":
+                return sortAllProductsByName(allProducts);
+            case "calories":
+                return sortAllProductsByCalories(allProducts);
+            case "category":
+                return sortAllProductsByCategory(allProducts);
+            default:
+                return allProducts;
+        }
+    }
+
+    private List<ProductDTO> getAllProducts() {
+        return productDAO.getAllProducts().stream()
+                .map(mapper::domainToDto)
+                .collect(Collectors.toList());
+    }
+
+    private List<ProductDTO> sortAllProductsByCategory(List<ProductDTO> products) {
+        return products.stream()
+                .sorted(Comparator.comparing(ProductDTO::getCategory))
+                .collect(Collectors.toList());
+    }
+
+    private List<ProductDTO> sortAllProductsByName(List<ProductDTO> products) {
+        return products.stream()
+                .sorted(Comparator.comparing(ProductDTO::getName))
+                .collect(Collectors.toList());
+    }
+
+    private List<ProductDTO> sortAllProductsByCalories(List<ProductDTO> products) {
+        return products.stream()
+                .sorted(Comparator.comparing(ProductDTO::getCalories, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+    }
+
 }

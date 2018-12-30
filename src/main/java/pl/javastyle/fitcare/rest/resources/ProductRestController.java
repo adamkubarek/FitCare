@@ -13,7 +13,6 @@ import pl.javastyle.fitcare.services.interfaces.ProductService;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("api-v1")
@@ -33,29 +32,13 @@ public class ProductRestController {
 
     @GetMapping("products")
     public ResponseEntity getAllProducts(@PathParam("sortBy") String sortedBy) {
-        List<ProductDTO> allProducts = productService.getAllProducts();
-
-        allProducts = sortByGivenItem(sortedBy, allProducts);
-
-        return new ResponseEntity<>(allProducts, HttpStatus.OK);
-    }
-
-    private List<ProductDTO> sortByGivenItem(String sortedBy, List<ProductDTO> allProducts) {
-        if ("name".equals(sortedBy)) {
-            allProducts = productService.sortAllProductsByName(allProducts);
-        } else if ("calories".equals(sortedBy)) {
-            allProducts = productService.sortAllProductsByCalories(allProducts);
-        } else if ("category".equals(sortedBy)) {
-            allProducts = productService.sortAllProductsByCategory(allProducts);
-        }
-
-        return allProducts;
+        return new ResponseEntity<>(productService.getSortedProducts(sortedBy), HttpStatus.OK);
     }
 
     @PostMapping("products")
     public ResponseEntity addNewProduct(@RequestBody @Valid ProductDTO product, BindingResult result) {
         if (result.hasErrors()) {
-            new BindingResultExceptionBuilder(result).processValidationExceptionHandling();
+            new BindingResultExceptionBuilder(result).buildException();
         }
 
         ProductDTO savedProduct = productService.addNewProduct(product);
@@ -70,7 +53,7 @@ public class ProductRestController {
     @PutMapping("products/{productId}")
     public ResponseEntity updateProduct(@RequestBody @Valid ProductDTO product, BindingResult result, @PathVariable Long productId) {
         if (result.hasErrors()) {
-            new BindingResultExceptionBuilder(result).processValidationExceptionHandling();
+            new BindingResultExceptionBuilder(result).buildException();
         }
 
         return new ResponseEntity<>(productService.updateProduct(product, productId), HttpStatus.OK);
