@@ -16,10 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class User implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity {
 
     private String name;
     private Integer age;
@@ -47,8 +44,4 @@ public class User implements BaseEntity {
     @OneToOne
     private WeightJournal weightJournal;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 }

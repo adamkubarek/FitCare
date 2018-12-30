@@ -5,17 +5,17 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.commons.domain.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Table(name = "measured_products")
 @Entity
 @Getter
 @Setter
 @ToString(exclude = {"diet", "product"})
-public class MeasuredProduct implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MeasuredProduct extends BaseEntity {
 
     private Double unitValue;
 
@@ -28,8 +28,4 @@ public class MeasuredProduct implements BaseEntity {
     @ManyToOne
     private Diet diet;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 }

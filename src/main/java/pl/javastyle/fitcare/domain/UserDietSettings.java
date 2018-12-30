@@ -5,17 +5,15 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.commons.domain.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Table(name = "diet_setttings")
 @Entity
 @Getter
 @Setter
 @ToString
-public class UserDietSettings implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserDietSettings extends BaseEntity {
 
     private Integer numberOfMeals;
     private Double caloriesLimit;
@@ -23,8 +21,4 @@ public class UserDietSettings implements BaseEntity {
     private Double fatLimit;
     private Double carbsLimit;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 }

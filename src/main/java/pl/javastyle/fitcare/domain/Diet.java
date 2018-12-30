@@ -5,7 +5,10 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.commons.domain.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,10 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(exclude = {"user", "productList"})
-public class Diet implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Diet extends BaseEntity {
 
     private String name;
     private LocalDate creationDate;
@@ -29,8 +29,4 @@ public class Diet implements BaseEntity {
     @OneToMany(mappedBy = "diet")
     private List<MeasuredProduct> productList;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 }

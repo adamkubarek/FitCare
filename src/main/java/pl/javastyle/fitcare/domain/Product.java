@@ -15,10 +15,7 @@ import javax.persistence.*;
 @Setter
 @ToString(exclude = {"user", "category"})
 @NoArgsConstructor
-public class Product implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Product extends BaseEntity {
 
     @Column(unique = true)
     private String name;
@@ -31,10 +28,6 @@ public class Product implements BaseEntity {
     @ManyToOne
     private User user;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 
     public void fillWithPatcherProperties(ProductDTO patcher) {
         if (patcher.getName() != null) {

@@ -6,25 +6,15 @@ import lombok.ToString;
 import pl.javastyle.fitcare.commons.domain.BaseEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @ToString
-public class WeightJournal implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class WeightJournal extends BaseEntity {
 
-    private LocalDate dateOfMeasure;
+    private LocalDateTime dateOfMeasure;
     private Double weight;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 }

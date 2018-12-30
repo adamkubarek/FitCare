@@ -5,23 +5,17 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.commons.domain.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Table(name = "units_of_measure")
 @Entity
 @Getter
 @Setter
 @ToString
-public class UnitOfMeasure implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UnitOfMeasure extends BaseEntity {
 
     private String name;
     private Double value;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 }

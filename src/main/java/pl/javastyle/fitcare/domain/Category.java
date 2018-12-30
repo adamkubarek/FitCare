@@ -15,10 +15,7 @@ import java.util.List;
 @Setter
 @ToString(exclude = {"user", "products"})
 @NoArgsConstructor
-public class Category implements BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Category extends BaseEntity {
 
     @Column(unique = true)
     private String name;
@@ -28,8 +25,4 @@ public class Category implements BaseEntity {
     @ManyToOne
     private User user;
 
-    @Override
-    public boolean isPersisted() {
-        return this.getId() != null;
-    }
 }
