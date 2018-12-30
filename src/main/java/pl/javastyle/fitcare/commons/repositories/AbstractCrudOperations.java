@@ -46,13 +46,8 @@ public abstract class AbstractCrudOperations<T extends BaseEntity> {
     @Transactional
     public T delete(Long id) {
         T item = read(id);
-
-        if (item == null) {
-            logger.error(String.format("Item with given id not found%d", id));
-            throw new ApplicationException(DbErrors.ITEM_NOT_FOUND);
-        }
-
         entityManager.remove(item);
+
         return item;
     }
 }
