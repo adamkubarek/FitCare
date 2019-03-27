@@ -1,12 +1,11 @@
-package pl.javastyle.fitcare.repositories;
+package pl.javastyle.fitcare.category;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.fitcare.core.AbstractCrudOperations;
+import pl.javastyle.fitcare.core.exceptions.ApplicationException;
+import pl.javastyle.fitcare.core.exceptions.DbErrors;
 import pl.javastyle.fitcare.domain.Category;
-import pl.javastyle.fitcare.exceptions.ApplicationException;
-import pl.javastyle.fitcare.exceptions.DbErrors;
-import pl.javastyle.fitcare.repositories.interfaces.CategoryDAO;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -14,9 +13,9 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class CategoryManager extends AbstractCrudOperations<Category> implements CategoryDAO {
+class CategoryDAOImpl extends AbstractCrudOperations<Category> implements CategoryDAO {
 
-    public CategoryManager() {
+    public CategoryDAOImpl() {
         super(Category.class);
     }
 
@@ -31,7 +30,7 @@ public class CategoryManager extends AbstractCrudOperations<Category> implements
 
     @Override
     public Category findCategoryByName(String name) {
-        TypedQuery<Category> query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
+        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
         query.setParameter("name", name);
 
         if (query.getResultList().isEmpty()) {

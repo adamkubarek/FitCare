@@ -4,8 +4,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.fitcare.core.AbstractCrudOperations;
 import pl.javastyle.fitcare.domain.Category;
-import pl.javastyle.fitcare.exceptions.ApplicationException;
-import pl.javastyle.fitcare.exceptions.DbErrors;
+import pl.javastyle.fitcare.core.exceptions.ApplicationException;
+import pl.javastyle.fitcare.core.exceptions.DbErrors;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;

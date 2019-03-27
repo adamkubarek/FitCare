@@ -3,8 +3,8 @@ package pl.javastyle.fitcare.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-import pl.javastyle.fitcare.exceptions.ApplicationException;
-import pl.javastyle.fitcare.exceptions.DbErrors;
+import pl.javastyle.fitcare.core.exceptions.ApplicationException;
+import pl.javastyle.fitcare.core.exceptions.DbErrors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

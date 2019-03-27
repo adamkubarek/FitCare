@@ -1,4 +1,4 @@
-package pl.javastyle.fitcare.exceptions;
+package pl.javastyle.fitcare.core.exceptions;
 
 import lombok.Getter;
 

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.javastyle.fitcare.rest.exceptionhandling.BindingResultExceptionBuilder;
+import pl.javastyle.fitcare.core.rest.BindingResultExceptionBuilder;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;

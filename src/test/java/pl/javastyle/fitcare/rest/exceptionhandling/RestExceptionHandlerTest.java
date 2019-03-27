@@ -4,9 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import pl.javastyle.fitcare.exceptions.ApplicationException;
-import pl.javastyle.fitcare.exceptions.DbErrors;
-import pl.javastyle.fitcare.exceptions.ValidationErrors;
+import pl.javastyle.fitcare.core.exceptions.ApplicationException;
+import pl.javastyle.fitcare.core.exceptions.DbErrors;
+import pl.javastyle.fitcare.core.exceptions.ValidationErrors;
+import pl.javastyle.fitcare.core.rest.RestExceptionHandler;
 
 import static org.junit.Assert.assertEquals;
 

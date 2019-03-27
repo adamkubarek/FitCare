@@ -1,4 +1,4 @@
-package pl.javastyle.fitcare.repositories.interfaces;
+package pl.javastyle.fitcare.category;
 
 import pl.javastyle.fitcare.core.CrudBaseOperations;
 import pl.javastyle.fitcare.domain.Category;
