@@ -2,6 +2,7 @@ package pl.javastyle.fitcare.domain;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.javastyle.fitcare.product.Product;
 
 import static org.junit.Assert.*;
 

@@ -5,8 +5,9 @@ import org.junit.Test;
 import pl.javastyle.fitcare.core.Mapper;
 import pl.javastyle.fitcare.domain.Category;
 import pl.javastyle.fitcare.domain.Macronutrients;
-import pl.javastyle.fitcare.domain.Product;
-import pl.javastyle.fitcare.rest.dto.ProductDTO;
+import pl.javastyle.fitcare.product.Product;
+import pl.javastyle.fitcare.product.ProductDTO;
+import pl.javastyle.fitcare.product.ProductMapper;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,7 +31,7 @@ public class ProductMapperTest {
         productDTO.setId(2L);
         productDTO.setName("Ryż");
         productDTO.setCategory("Kasze i ryże");
-        productDTO.setMacronutrients(new Macronutrients(10D,70D,10D));
+        productDTO.setMacronutrients(new Macronutrients(10D, 70D, 10D));
         productDTO.setCalories(410D);
     }
 
@@ -41,7 +42,7 @@ public class ProductMapperTest {
         Category category = new Category();
         category.setName("Owoce");
         product.setCategory(category);
-        product.setMacronutrients(new Macronutrients(5D,15D,10D));
+        product.setMacronutrients(new Macronutrients(5D, 15D, 10D));
         product.setCalories(170D);
     }
 

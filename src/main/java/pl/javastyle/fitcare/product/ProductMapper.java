@@ -1,10 +1,8 @@
-package pl.javastyle.fitcare.services.mappers;
+package pl.javastyle.fitcare.product;
 
 import org.springframework.stereotype.Component;
 import pl.javastyle.fitcare.core.Mapper;
 import pl.javastyle.fitcare.domain.Category;
-import pl.javastyle.fitcare.domain.Product;
-import pl.javastyle.fitcare.rest.dto.ProductDTO;
 
 @Component
 public class ProductMapper implements Mapper<Product, ProductDTO> {

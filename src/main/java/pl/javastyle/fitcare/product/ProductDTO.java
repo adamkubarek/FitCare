@@ -1,4 +1,4 @@
-package pl.javastyle.fitcare.rest.dto;
+package pl.javastyle.fitcare.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

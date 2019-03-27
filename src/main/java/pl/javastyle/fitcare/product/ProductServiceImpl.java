@@ -1,14 +1,8 @@
-package pl.javastyle.fitcare.services;
+package pl.javastyle.fitcare.product;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.fitcare.core.Mapper;
-import pl.javastyle.fitcare.domain.Product;
-import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
-import pl.javastyle.fitcare.rest.dto.ProductDTO;
-import pl.javastyle.fitcare.services.interfaces.ProductService;
-import pl.javastyle.fitcare.services.mappers.ProductMapper;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,12 +10,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ProductServiceImpl implements ProductService {
+class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO;
     private Mapper<Product, ProductDTO> mapper;
 
-    @Autowired
+
     public ProductServiceImpl(ProductDAO productDAO) {
         this.productDAO = productDAO;
         this.mapper = new ProductMapper();

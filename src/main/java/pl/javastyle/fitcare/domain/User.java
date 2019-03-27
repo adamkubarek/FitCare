@@ -7,6 +7,7 @@ import pl.javastyle.fitcare.core.BaseEntity;
 import pl.javastyle.fitcare.domain.enums.ActivityRate;
 import pl.javastyle.fitcare.domain.enums.DietGoal;
 import pl.javastyle.fitcare.domain.enums.Gender;
+import pl.javastyle.fitcare.product.Product;
 
 import javax.persistence.*;
 import java.util.List;

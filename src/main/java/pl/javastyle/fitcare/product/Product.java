@@ -1,11 +1,13 @@
-package pl.javastyle.fitcare.domain;
+package pl.javastyle.fitcare.product;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.core.BaseEntity;
-import pl.javastyle.fitcare.rest.dto.ProductDTO;
+import pl.javastyle.fitcare.domain.Category;
+import pl.javastyle.fitcare.domain.Macronutrients;
+import pl.javastyle.fitcare.domain.User;
 
 import javax.persistence.*;
 
@@ -29,7 +31,7 @@ public class Product extends BaseEntity {
     private User user;
 
 
-    public void fillWithPatcherProperties(ProductDTO patcher) {
+    void fillWithPatcherProperties(ProductDTO patcher) {
         if (patcher.getName() != null) {
             this.setName(patcher.getName());
         }

@@ -1,13 +1,11 @@
-package pl.javastyle.fitcare.repositories;
+package pl.javastyle.fitcare.product;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.fitcare.core.AbstractCrudOperations;
 import pl.javastyle.fitcare.domain.Category;
-import pl.javastyle.fitcare.domain.Product;
 import pl.javastyle.fitcare.exceptions.ApplicationException;
 import pl.javastyle.fitcare.exceptions.DbErrors;
-import pl.javastyle.fitcare.repositories.interfaces.ProductDAO;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -15,9 +13,9 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class ProductManager extends AbstractCrudOperations<Product> implements ProductDAO {
+class ProductDAOImpl extends AbstractCrudOperations<Product> implements ProductDAO {
 
-    public ProductManager() {
+    public ProductDAOImpl() {
         super(Product.class);
     }
 
@@ -43,7 +41,7 @@ public class ProductManager extends AbstractCrudOperations<Product> implements P
     }
 
     private void setCategoryIfAlreadyExists(Product product) {
-        TypedQuery<Category> query =  entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
+        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
         query.setParameter("name", product.getCategory().getName());
 
         if (!query.getResultList().isEmpty()) {

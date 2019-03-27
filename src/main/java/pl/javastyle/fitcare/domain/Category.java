@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.core.BaseEntity;
+import pl.javastyle.fitcare.product.Product;
 
 import javax.persistence.*;
 import java.util.List;
