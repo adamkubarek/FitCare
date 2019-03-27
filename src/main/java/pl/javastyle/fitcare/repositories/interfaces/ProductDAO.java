@@ -1,6 +1,6 @@
 package pl.javastyle.fitcare.repositories.interfaces;
 
-import pl.javastyle.fitcare.commons.repositories.CrudBaseOperations;
+import pl.javastyle.fitcare.core.CrudBaseOperations;
 import pl.javastyle.fitcare.domain.Product;
 
 import java.util.List;

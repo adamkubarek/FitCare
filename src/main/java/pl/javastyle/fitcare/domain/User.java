@@ -3,7 +3,7 @@ package pl.javastyle.fitcare.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.javastyle.fitcare.commons.domain.BaseEntity;
+import pl.javastyle.fitcare.core.BaseEntity;
 import pl.javastyle.fitcare.domain.enums.ActivityRate;
 import pl.javastyle.fitcare.domain.enums.DietGoal;
 import pl.javastyle.fitcare.domain.enums.Gender;

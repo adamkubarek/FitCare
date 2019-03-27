@@ -1,4 +1,4 @@
-package pl.javastyle.fitcare.commons.domain;
+package pl.javastyle.fitcare.core;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

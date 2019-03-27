@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import pl.javastyle.fitcare.commons.domain.BaseEntity;
+import pl.javastyle.fitcare.core.BaseEntity;
 
 import javax.persistence.*;
 import java.util.List;

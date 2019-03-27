@@ -3,7 +3,7 @@ package pl.javastyle.fitcare.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.javastyle.fitcare.commons.domain.BaseEntity;
+import pl.javastyle.fitcare.core.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

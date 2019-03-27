@@ -1,6 +1,4 @@
-package pl.javastyle.fitcare.commons.repositories;
-
-import pl.javastyle.fitcare.commons.domain.BaseEntity;
+package pl.javastyle.fitcare.core;
 
 public interface CrudBaseOperations<T extends BaseEntity> {
     T save(T item);
