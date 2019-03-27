@@ -1,4 +1,4 @@
-package pl.javastyle.fitcare.domain;
+package pl.javastyle.fitcare.category;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.core.BaseEntity;
 import pl.javastyle.fitcare.product.Product;
+import pl.javastyle.fitcare.user.User;
 
 import javax.persistence.*;
 import java.util.List;

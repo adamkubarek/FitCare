@@ -1,10 +1,8 @@
-package pl.javastyle.fitcare.repositories;
+package pl.javastyle.fitcare.user;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.fitcare.core.AbstractCrudOperations;
-import pl.javastyle.fitcare.domain.User;
-import pl.javastyle.fitcare.repositories.interfaces.UserDAO;
 
 @Repository
 @Transactional

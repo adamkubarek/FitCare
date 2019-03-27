@@ -1,11 +1,11 @@
 package pl.javastyle.fitcare.startup;
 
 import org.springframework.stereotype.Component;
-import pl.javastyle.fitcare.domain.User;
-import pl.javastyle.fitcare.domain.enums.ActivityRate;
-import pl.javastyle.fitcare.domain.enums.DietGoal;
-import pl.javastyle.fitcare.domain.enums.Gender;
-import pl.javastyle.fitcare.repositories.interfaces.UserDAO;
+import pl.javastyle.fitcare.user.User;
+import pl.javastyle.fitcare.user.UserDAO;
+import pl.javastyle.fitcare.user.enums.ActivityRate;
+import pl.javastyle.fitcare.user.enums.DietGoal;
+import pl.javastyle.fitcare.user.enums.Gender;
 
 @Component
 public class StartupData {

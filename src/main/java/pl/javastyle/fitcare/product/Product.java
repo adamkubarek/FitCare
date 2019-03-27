@@ -5,9 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.core.BaseEntity;
-import pl.javastyle.fitcare.domain.Category;
-import pl.javastyle.fitcare.domain.Macronutrients;
-import pl.javastyle.fitcare.domain.User;
+import pl.javastyle.fitcare.category.Category;
+import pl.javastyle.fitcare.user.User;
 
 import javax.persistence.*;
 

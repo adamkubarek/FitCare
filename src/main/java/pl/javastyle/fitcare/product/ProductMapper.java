@@ -2,7 +2,7 @@ package pl.javastyle.fitcare.product;
 
 import org.springframework.stereotype.Component;
 import pl.javastyle.fitcare.core.Mapper;
-import pl.javastyle.fitcare.domain.Category;
+import pl.javastyle.fitcare.category.Category;
 
 @Component
 public class ProductMapper implements Mapper<Product, ProductDTO> {

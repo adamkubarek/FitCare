@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import pl.javastyle.fitcare.domain.Macronutrients;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

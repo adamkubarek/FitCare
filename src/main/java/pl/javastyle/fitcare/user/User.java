@@ -1,12 +1,16 @@
-package pl.javastyle.fitcare.domain;
+package pl.javastyle.fitcare.user;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.core.BaseEntity;
-import pl.javastyle.fitcare.domain.enums.ActivityRate;
-import pl.javastyle.fitcare.domain.enums.DietGoal;
-import pl.javastyle.fitcare.domain.enums.Gender;
+import pl.javastyle.fitcare.category.Category;
+import pl.javastyle.fitcare.domain.Diet;
+import pl.javastyle.fitcare.domain.UserDietSettings;
+import pl.javastyle.fitcare.domain.WeightJournal;
+import pl.javastyle.fitcare.user.enums.ActivityRate;
+import pl.javastyle.fitcare.user.enums.DietGoal;
+import pl.javastyle.fitcare.user.enums.Gender;
 import pl.javastyle.fitcare.product.Product;
 
 import javax.persistence.*;

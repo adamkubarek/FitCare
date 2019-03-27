@@ -3,7 +3,7 @@ package pl.javastyle.fitcare.product;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.fitcare.core.AbstractCrudOperations;
-import pl.javastyle.fitcare.domain.Category;
+import pl.javastyle.fitcare.category.Category;
 import pl.javastyle.fitcare.core.exceptions.ApplicationException;
 import pl.javastyle.fitcare.core.exceptions.DbErrors;
 
