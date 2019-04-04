@@ -1,2 +1,6 @@
 server:
   port: 8089
+
+app:
+  jwtSecret: ${JWT_SECRET}
+  jwtExpiration: ${JWT_EXPIRATION}
