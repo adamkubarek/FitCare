@@ -3,6 +3,7 @@ package pl.javastyle.fitcare.user;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.javastyle.fitcare.authentication.domain.Auth;
 import pl.javastyle.fitcare.core.BaseEntity;
 import pl.javastyle.fitcare.category.Category;
 import pl.javastyle.fitcare.domain.Diet;
@@ -48,5 +49,8 @@ public class User extends BaseEntity {
 
     @OneToOne
     private WeightJournal weightJournal;
+
+    @OneToOne
+    private Auth auth;
 
 }
