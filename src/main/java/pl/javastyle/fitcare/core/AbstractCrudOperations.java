@@ -8,7 +8,6 @@ import pl.javastyle.fitcare.core.exceptions.DbErrors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 
 public abstract class AbstractCrudOperations<T extends BaseEntity> {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -24,10 +23,8 @@ public abstract class AbstractCrudOperations<T extends BaseEntity> {
     @Transactional
     public T save(T item) {
         if (item.isPersisted()) {
-            item.setAuditMd(LocalDateTime.now());
             return entityManager.merge(item);
         } else {
-            item.setAuditCd(LocalDateTime.now());
             entityManager.persist(item);
             return item;
         }

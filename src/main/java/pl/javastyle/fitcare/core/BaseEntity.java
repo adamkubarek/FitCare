@@ -1,9 +1,6 @@
 package pl.javastyle.fitcare.core;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -14,6 +11,16 @@ public abstract class BaseEntity {
 
     private LocalDateTime auditCd;
     private LocalDateTime auditMd;
+
+    @PrePersist
+    public void prePersist() {
+        setAuditCd(LocalDateTime.now());
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        setAuditMd(LocalDateTime.now());
+    }
 
     public boolean isPersisted() {
         return this.getId() != null;
