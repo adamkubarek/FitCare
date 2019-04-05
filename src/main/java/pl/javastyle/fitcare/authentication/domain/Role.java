@@ -18,5 +18,5 @@ import javax.persistence.Table;
 public class Role extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    private RoleNames name;
+    private RoleName name;
 }

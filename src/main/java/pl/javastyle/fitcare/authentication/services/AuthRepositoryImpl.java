@@ -5,7 +5,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.javastyle.fitcare.authentication.domain.Auth;
+import pl.javastyle.fitcare.authentication.domain.Role;
+import pl.javastyle.fitcare.authentication.domain.RoleName;
 import pl.javastyle.fitcare.core.AbstractCrudOperations;
+import pl.javastyle.fitcare.core.exceptions.ApplicationException;
+import pl.javastyle.fitcare.core.exceptions.DbErrors;
 
 import javax.persistence.TypedQuery;
 
@@ -38,6 +42,21 @@ public class AuthRepositoryImpl extends AbstractCrudOperations<Auth> implements 
             return true;
         } catch (UsernameNotFoundException e) {
             return false;
+        }
+    }
+
+    @Override
+    public Role findRoleByName(RoleName name) {
+        String sql = "SELECT e FROM Role e where e.name = :name";
+
+        TypedQuery<Role> query = entityManager.createQuery(sql, Role.class);
+
+        query.setParameter("name", name);
+
+        if (CollectionUtils.isEmpty(query.getResultList())) {
+            throw new ApplicationException(DbErrors.ITEM_NOT_FOUND);
+        } else {
+            return query.getSingleResult();
         }
     }
 }

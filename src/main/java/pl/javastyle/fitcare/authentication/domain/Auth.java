@@ -36,7 +36,7 @@ public class Auth extends BaseEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "auth")
+    @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
     private User user;
 
     private Long userId;

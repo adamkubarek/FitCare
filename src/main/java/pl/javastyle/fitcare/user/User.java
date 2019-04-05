@@ -50,7 +50,7 @@ public class User extends BaseEntity {
     @OneToOne
     private WeightJournal weightJournal;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Auth auth;
 
 }
