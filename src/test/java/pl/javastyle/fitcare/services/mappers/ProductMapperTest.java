@@ -48,7 +48,7 @@ public class ProductMapperTest {
 
     @Test
     public void dtoProductShouldHaveTheSameFieldsAsProductAfterMapping() {
-        Product result = mapper.dtoToDomain(productDTO);
+        Product result = mapper.dtoToDomain(productDTO, null);
 
         assertEquals(productDTO.getId(), result.getId());
         assertEquals(productDTO.getName(), result.getName());

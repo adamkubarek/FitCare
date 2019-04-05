@@ -1,8 +1,12 @@
 package pl.javastyle.fitcare.product;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.javastyle.fitcare.authentication.domain.Auth;
 import pl.javastyle.fitcare.core.Mapper;
+import pl.javastyle.fitcare.user.User;
+import pl.javastyle.fitcare.user.UserRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -12,51 +16,65 @@ import java.util.stream.Collectors;
 @Transactional
 class ProductServiceImpl implements ProductService {
 
-    private ProductDAO productDAO;
+    private ProductRepository productRepository;
+    private UserRepository userRepository;
     private Mapper<Product, ProductDTO> mapper;
 
 
-    public ProductServiceImpl(ProductDAO productDAO) {
-        this.productDAO = productDAO;
+    public ProductServiceImpl(ProductRepository productRepository, UserRepository userRepository) {
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
         this.mapper = new ProductMapper();
     }
 
     @Override
     public ProductDTO getProductById(Long id) {
-        return mapper.domainToDto(productDAO.read(id));
+        return mapper.domainToDto(productRepository.read(id));
     }
 
     @Override
     public ProductDTO addNewProduct(ProductDTO productDTO) {
-        Product addedProduct = productDAO.save(mapper.dtoToDomain(productDTO));
+        Product product = mapper.dtoToDomain(productDTO, getUserFromAuth());
+        attachUserOwner(product);
+
+        Product addedProduct = productRepository.save(product);
         return mapper.domainToDto(addedProduct);
+    }
+
+    private void attachUserOwner(Product product) {
+        product.setUser(getUserFromAuth());
+    }
+
+    private User getUserFromAuth() {
+        Auth auth = (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.getUserFromAuth(auth);
     }
 
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO, Long productId) {
         productDTO.setId(productId);
-        Product savedProduct = productDAO.save(mapper.dtoToDomain(productDTO));
+        Product savedProduct = productRepository.save(mapper.dtoToDomain(productDTO, null));
         return mapper.domainToDto(savedProduct);
     }
 
     @Override
     public ProductDTO patchProduct(ProductDTO patcher, Long productId) {
-        Product product = productDAO.read(productId);
+        Product product = productRepository.read(productId);
 
         product.fillWithPatcherProperties(patcher);
 
-        return mapper.domainToDto(productDAO.save(product));
+        return mapper.domainToDto(productRepository.save(product));
     }
 
     @Override
     public ProductDTO deleteProduct(Long id) {
-        return mapper.domainToDto(productDAO.delete(id));
+        return mapper.domainToDto(productRepository.delete(id));
     }
 
     @Override
     public List<ProductDTO> getSortedProducts(String sortedBy) {
         List<ProductDTO> allProducts = getAllProducts();
-        switch (sortedBy) {
+        switch (String.valueOf(sortedBy)) {
             case "name":
                 return sortAllProductsByName(allProducts);
             case "calories":
@@ -69,7 +87,7 @@ class ProductServiceImpl implements ProductService {
     }
 
     private List<ProductDTO> getAllProducts() {
-        return productDAO.getAllProducts().stream()
+        return productRepository.getAllProducts(getUserFromAuth()).stream()
                 .map(mapper::domainToDto)
                 .collect(Collectors.toList());
     }

@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import pl.javastyle.fitcare.core.BaseEntity;
 import pl.javastyle.fitcare.category.Category;
+import pl.javastyle.fitcare.core.BaseEntity;
 import pl.javastyle.fitcare.user.User;
 
 import javax.persistence.*;
@@ -18,7 +18,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Product extends BaseEntity {
 
-    @Column(unique = true)
     private String name;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Category category;
@@ -28,7 +27,6 @@ public class Product extends BaseEntity {
 
     @ManyToOne
     private User user;
-
 
     void fillWithPatcherProperties(ProductDTO patcher) {
         if (patcher.getName() != null) {

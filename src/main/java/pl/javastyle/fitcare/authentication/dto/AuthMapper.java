@@ -9,7 +9,7 @@ import pl.javastyle.fitcare.user.UserDTO;
 public class AuthMapper implements Mapper<Auth, AuthDTO> {
 
     @Override
-    public Auth dtoToDomain(AuthDTO authDTO) {
+    public Auth dtoToDomain(AuthDTO authDTO, User user) {
         UserDTO userDTO = authDTO.getUserDTO();
         Auth auth = new Auth();
 
@@ -18,7 +18,6 @@ public class AuthMapper implements Mapper<Auth, AuthDTO> {
         auth.setPassword(new BCryptPasswordEncoder().encode(authDTO.getPassword()));
         auth.setRoles(authDTO.getRoles());
 
-        User user = new User();
         user.setName(userDTO.getName());
         user.setAge(userDTO.getAge());
         user.setWeight(userDTO.getWeight());

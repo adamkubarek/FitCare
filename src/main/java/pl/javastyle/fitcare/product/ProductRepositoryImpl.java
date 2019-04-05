@@ -1,11 +1,13 @@
 package pl.javastyle.fitcare.product;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.javastyle.fitcare.core.AbstractCrudOperations;
 import pl.javastyle.fitcare.category.Category;
+import pl.javastyle.fitcare.core.AbstractCrudOperations;
 import pl.javastyle.fitcare.core.exceptions.ApplicationException;
 import pl.javastyle.fitcare.core.exceptions.DbErrors;
+import pl.javastyle.fitcare.user.User;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -13,17 +15,19 @@ import java.util.List;
 
 @Repository
 @Transactional
-class ProductDAOImpl extends AbstractCrudOperations<Product> implements ProductDAO {
+class ProductRepositoryImpl extends AbstractCrudOperations<Product> implements ProductRepository {
 
-    public ProductDAOImpl() {
+    public ProductRepositoryImpl() {
         super(Product.class);
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
+    public List<Product> getAllProducts(User user) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p WHERE p.user = :user", Product.class);
 
-        if (query.getResultList().isEmpty()) {
+        query.setParameter("user", user);
+
+        if (CollectionUtils.isEmpty(query.getResultList())) {
             throw new ApplicationException(DbErrors.ITEMS_NOT_FOUND);
         }
 
@@ -41,10 +45,11 @@ class ProductDAOImpl extends AbstractCrudOperations<Product> implements ProductD
     }
 
     private void setCategoryIfAlreadyExists(Product product) {
-        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name", Category.class);
+        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c WHERE c.name=:name AND c.user = :user", Category.class);
         query.setParameter("name", product.getCategory().getName());
+        query.setParameter("user", product.getUser());
 
-        if (!query.getResultList().isEmpty()) {
+        if (CollectionUtils.isNotEmpty(query.getResultList())) {
             product.setCategory(query.getSingleResult());
         }
     }

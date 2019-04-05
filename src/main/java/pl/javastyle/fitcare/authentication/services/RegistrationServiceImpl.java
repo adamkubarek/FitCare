@@ -9,7 +9,6 @@ import pl.javastyle.fitcare.authentication.dto.AuthDTO;
 import pl.javastyle.fitcare.authentication.dto.AuthMapper;
 import pl.javastyle.fitcare.core.Mapper;
 import pl.javastyle.fitcare.user.User;
-import pl.javastyle.fitcare.user.UserRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,12 +18,10 @@ import java.util.Set;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private final AuthRepository authRepository;
-    private final UserRepository userRepository;
     private final Mapper<Auth, AuthDTO> authMapper;
 
-    public RegistrationServiceImpl(AuthRepository authRepository, UserRepository userRepository) {
+    public RegistrationServiceImpl(AuthRepository authRepository) {
         this.authRepository = authRepository;
-        this.userRepository = userRepository;
         this.authMapper = new AuthMapper();
     }
 
@@ -36,11 +33,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         signUserRole(registrationForm);
 
-        Auth userToRegister = authMapper.dtoToDomain(registrationForm);
-        User savedUser = userRepository.save(userToRegister.getUser());
-        userToRegister.setUserId(savedUser.getId());
+        Auth userToRegister = authMapper.dtoToDomain(registrationForm, new User());
         authRepository.save(userToRegister);
-
         return true;
     }
 

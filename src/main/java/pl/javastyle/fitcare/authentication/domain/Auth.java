@@ -30,16 +30,14 @@ public class Auth extends BaseEntity implements UserDetails {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "authentication_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "auth", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
-
-    private Long userId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

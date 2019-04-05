@@ -19,12 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Category extends BaseEntity {
 
-    @Column(unique = true)
     private String name;
     private String description;
     @OneToMany(mappedBy = "category")
     private List<Product> products;
     @ManyToOne
     private User user;
-
 }

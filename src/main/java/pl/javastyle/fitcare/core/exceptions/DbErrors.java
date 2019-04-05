@@ -4,7 +4,8 @@ public enum DbErrors implements ApplicationError {
     ITEM_NOT_FOUND("Given item doesn't exist"),
     ITEMS_NOT_FOUND("No items found"),
     DUPLICATED_PRODUCT_NAME("Given product already exist"),
-    DUPLICATED_CATEGORY_NAME("Given category already exist");
+    DUPLICATED_CATEGORY_NAME("Given category already exist"),
+    USER_NOT_FOUND("User not found");
 
     private final String description;
 
