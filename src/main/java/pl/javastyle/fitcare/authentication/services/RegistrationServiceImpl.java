@@ -50,4 +50,12 @@ public class RegistrationServiceImpl implements RegistrationService {
         roles.add(userRole);
         registrationForm.setRoles(roles);
     }
+
+    @Override
+    public String buildErrorResponse(AuthDTO authDTO) {
+        return "User registered with email " +
+                authDTO.getEmail() +
+                " already exist. " +
+                "Please use different email to register your account.";
+    }
 }

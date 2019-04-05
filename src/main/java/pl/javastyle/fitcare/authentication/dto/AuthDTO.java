@@ -9,6 +9,7 @@ import pl.javastyle.fitcare.user.UserDTO;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @ToString
@@ -20,6 +21,7 @@ public class AuthDTO {
     @NotBlank
     private String email;
     @NotBlank
+    @Size(min = 8, max = 25)
     private String password;
     private Set<Role> roles;
     @Valid
