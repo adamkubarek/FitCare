@@ -27,7 +27,7 @@ public class RestExceptionHandler {
 
         if (error.equals(DbErrors.ITEM_NOT_FOUND)) {
             httpStatus = HttpStatus.NOT_FOUND;
-        } else if (error.equals(DbErrors.DUPLICATED_PRODUCT_NAME) || error.equals(ValidationErrors.NOT_VALID)) {
+        } else if (error.equals(ValidationErrors.NOT_VALID)) {
             httpStatus = HttpStatus.BAD_REQUEST;
         }
 

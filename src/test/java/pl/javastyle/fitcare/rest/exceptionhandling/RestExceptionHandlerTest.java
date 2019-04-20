@@ -33,18 +33,6 @@ public class RestExceptionHandlerTest {
     }
 
     @Test
-    public void shouldReturnBadRequestStatusWhenDuplicatedProductName() {
-        try {
-            throw new ApplicationException(DbErrors.DUPLICATED_PRODUCT_NAME);
-        } catch (ApplicationException exception) {
-            ResponseEntity entity = handler.handleApplicationException(exception);
-            HttpStatus result = entity.getStatusCode();
-
-            assertEquals(HttpStatus.BAD_REQUEST, result);
-        }
-    }
-
-    @Test
     public void shouldReturnNotFoundStatusWhenProductNotFound() {
         try {
             throw new ApplicationException(DbErrors.ITEM_NOT_FOUND);
