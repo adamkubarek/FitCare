@@ -1,12 +1,9 @@
 package pl.javastyle.fitcare.product;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.javastyle.fitcare.authentication.domain.Auth;
+import pl.javastyle.fitcare.core.Context;
 import pl.javastyle.fitcare.core.Mapper;
-import pl.javastyle.fitcare.user.User;
-import pl.javastyle.fitcare.user.UserRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -17,13 +14,11 @@ import java.util.stream.Collectors;
 class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
-    private UserRepository userRepository;
     private Mapper<Product, ProductDTO> mapper;
 
 
-    public ProductServiceImpl(ProductRepository productRepository, UserRepository userRepository) {
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.userRepository = userRepository;
         this.mapper = new ProductMapper();
     }
 
@@ -34,20 +29,10 @@ class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addNewProduct(ProductDTO productDTO) {
-        Product product = mapper.dtoToDomain(productDTO, getUserFromAuth());
-        attachUserOwner(product);
-
+        Product product = mapper.dtoToDomain(productDTO, Context.getUser());
         Product addedProduct = productRepository.save(product);
+
         return mapper.domainToDto(addedProduct);
-    }
-
-    private void attachUserOwner(Product product) {
-        product.setUser(getUserFromAuth());
-    }
-
-    private User getUserFromAuth() {
-        Auth auth = (Auth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.getUserFromAuth(auth);
     }
 
     @Override
@@ -87,7 +72,7 @@ class ProductServiceImpl implements ProductService {
     }
 
     private List<ProductDTO> getAllProducts() {
-        return productRepository.getAllProducts(getUserFromAuth()).stream()
+        return productRepository.getAllProducts(Context.getUser()).stream()
                 .map(mapper::domainToDto)
                 .collect(Collectors.toList());
     }
@@ -109,5 +94,4 @@ class ProductServiceImpl implements ProductService {
                 .sorted(Comparator.comparing(ProductDTO::getCalories, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
-
 }
