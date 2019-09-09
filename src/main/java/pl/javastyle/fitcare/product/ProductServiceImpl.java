@@ -2,8 +2,6 @@ package pl.javastyle.fitcare.product;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.javastyle.fitcare.core.Context;
-import pl.javastyle.fitcare.core.Mapper;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,33 +11,34 @@ import java.util.stream.Collectors;
 @Transactional
 class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
-    private Mapper<Product, ProductDTO> mapper;
+    private final ProductRepository productRepository;
+    private final ProductDataFactory productDataFactory;
 
-
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductDataFactory productDataFactory) {
         this.productRepository = productRepository;
-        this.mapper = new ProductMapper();
+        this.productDataFactory = productDataFactory;
     }
 
     @Override
     public ProductDTO getProductById(Long id) {
-        return mapper.domainToDto(productRepository.read(id));
+        return (ProductDTO) productDataFactory.createDTO(productRepository.read(id));
     }
 
     @Override
     public ProductDTO addNewProduct(ProductDTO productDTO) {
-        Product product = mapper.dtoToDomain(productDTO, Context.getUser());
+        Product product = (Product) productDataFactory.createEntity(productDTO);
         Product addedProduct = productRepository.save(product);
 
-        return mapper.domainToDto(addedProduct);
+        return (ProductDTO) productDataFactory.createDTO(addedProduct);
     }
 
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO, Long productId) {
         productDTO.setId(productId);
-        Product savedProduct = productRepository.save(mapper.dtoToDomain(productDTO, null));
-        return mapper.domainToDto(savedProduct);
+        Product product = (Product) productDataFactory.createEntity(productDTO);
+        Product savedProduct = productRepository.save(product);
+
+        return (ProductDTO) productDataFactory.createDTO(savedProduct);
     }
 
     @Override
@@ -48,12 +47,12 @@ class ProductServiceImpl implements ProductService {
 
         product.fillWithPatcherProperties(patcher);
 
-        return mapper.domainToDto(productRepository.save(product));
+        return (ProductDTO) productDataFactory.createDTO(productRepository.save(product));
     }
 
     @Override
     public ProductDTO deleteProduct(Long id) {
-        return mapper.domainToDto(productRepository.delete(id));
+        return (ProductDTO) productDataFactory.createDTO(productRepository.delete(id));
     }
 
     @Override
@@ -72,8 +71,9 @@ class ProductServiceImpl implements ProductService {
     }
 
     private List<ProductDTO> getAllProducts() {
-        return productRepository.getAllProducts(Context.getUser()).stream()
-                .map(mapper::domainToDto)
+        return productRepository.getAllProducts()
+                .stream()
+                .map(product -> (ProductDTO) productDataFactory.createDTO(product))
                 .collect(Collectors.toList());
     }
 

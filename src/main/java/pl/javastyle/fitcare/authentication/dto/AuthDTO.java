@@ -1,10 +1,12 @@
 package pl.javastyle.fitcare.authentication.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import pl.javastyle.fitcare.authentication.domain.Auth;
 import pl.javastyle.fitcare.authentication.domain.Role;
+import pl.javastyle.fitcare.core.BaseDTO;
 import pl.javastyle.fitcare.user.UserDTO;
 
 import javax.validation.Valid;
@@ -15,9 +17,9 @@ import java.util.Set;
 @ToString
 @Getter
 @Setter
-public class AuthDTO {
-    @JsonIgnore
-    private Long id;
+@NoArgsConstructor
+public class AuthDTO extends BaseDTO {
+
     @NotBlank
     private String email;
     @NotBlank
@@ -26,4 +28,10 @@ public class AuthDTO {
     private Set<Role> roles;
     @Valid
     private UserDTO userDTO;
+
+    public AuthDTO(Auth auth) {
+        setId(auth.getId());
+        this.email = auth.getEmail();
+        this.password = auth.getPassword();
+    }
 }

@@ -15,17 +15,15 @@ public class RestExceptionHandler {
 
     @ExceptionHandler({ApplicationException.class})
     public ResponseEntity handleApplicationException(Exception exception) {
-        ApplicationError error = ((ApplicationException) exception).getError();
+        HttpStatus httpStatus = determineHttpStatusResponse(((ApplicationException) exception).getError());
 
-        HttpStatus httpStatus = determineHttpStatusResponse(error);
-
-        return new ResponseEntity<>(error.getDescription(), new HttpHeaders(), httpStatus);
+        return new ResponseEntity<>(((ApplicationException) exception).getFullErrorDescription(), new HttpHeaders(), httpStatus);
     }
 
     private HttpStatus determineHttpStatusResponse(ApplicationError error) {
         HttpStatus httpStatus = HttpStatus.OK;
 
-        if (error.equals(DbErrors.ITEM_NOT_FOUND)) {
+        if (error.equals(DbErrors.ITEM_NOT_FOUND) || error.equals(DbErrors.CATEGORY_NOT_FOUND)) {
             httpStatus = HttpStatus.NOT_FOUND;
         } else if (error.equals(ValidationErrors.NOT_VALID)) {
             httpStatus = HttpStatus.BAD_REQUEST;

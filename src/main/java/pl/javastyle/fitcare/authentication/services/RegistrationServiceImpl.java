@@ -2,13 +2,11 @@ package pl.javastyle.fitcare.authentication.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.javastyle.fitcare.authentication.AuthDataFactory;
 import pl.javastyle.fitcare.authentication.domain.Auth;
 import pl.javastyle.fitcare.authentication.domain.Role;
 import pl.javastyle.fitcare.authentication.domain.RoleName;
 import pl.javastyle.fitcare.authentication.dto.AuthDTO;
-import pl.javastyle.fitcare.authentication.dto.AuthMapper;
-import pl.javastyle.fitcare.core.Mapper;
-import pl.javastyle.fitcare.user.User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,23 +16,23 @@ import java.util.Set;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private final AuthRepository authRepository;
-    private final Mapper<Auth, AuthDTO> authMapper;
+    private final AuthDataFactory authDataFactory;
 
-    public RegistrationServiceImpl(AuthRepository authRepository) {
+    public RegistrationServiceImpl(AuthRepository authRepository, AuthDataFactory authDataFactory) {
         this.authRepository = authRepository;
-        this.authMapper = new AuthMapper();
+        this.authDataFactory = authDataFactory;
     }
 
     @Override
     public Boolean registerNewUser(AuthDTO registrationForm) {
-        if (authRepository.existsByEmail(registrationForm.getEmail())) {
+        if (Boolean.TRUE.equals(authRepository.existsByEmail(registrationForm.getEmail()))) {
             return false;
         }
 
         signUserRole(registrationForm);
-
-        Auth userToRegister = authMapper.dtoToDomain(registrationForm, new User());
+        Auth userToRegister = (Auth) authDataFactory.createEntity(registrationForm);
         authRepository.save(userToRegister);
+
         return true;
     }
 

@@ -1,11 +1,14 @@
 package pl.javastyle.fitcare.authentication.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import pl.javastyle.fitcare.authentication.dto.AuthDTO;
 import pl.javastyle.fitcare.core.BaseEntity;
 import pl.javastyle.fitcare.user.User;
 
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Auth extends BaseEntity implements UserDetails {
 
     private String email;
@@ -38,6 +42,14 @@ public class Auth extends BaseEntity implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private User user;
+
+    public Auth(AuthDTO authDTO) {
+        setId(authDTO.getId());
+        this.email = authDTO.getEmail();
+        this.password = new BCryptPasswordEncoder().encode(authDTO.getPassword());
+        this.roles = authDTO.getRoles();
+        this.user = new User(authDTO.getUserDTO());
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

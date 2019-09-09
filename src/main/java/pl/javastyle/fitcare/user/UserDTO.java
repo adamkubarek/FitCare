@@ -2,6 +2,7 @@ package pl.javastyle.fitcare.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import pl.javastyle.fitcare.user.enums.ActivityRate;
@@ -13,7 +14,9 @@ import javax.validation.constraints.NotNull;
 @ToString
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserDTO {
+
     @JsonIgnore
     private Long id;
     @NotNull

@@ -28,6 +28,13 @@ public class Product extends BaseEntity {
     @ManyToOne
     private User user;
 
+    public Product(ProductDTO productDTO) {
+        setId(productDTO.getId());
+        this.name = productDTO.getName();
+        this.calories = productDTO.getCalories();
+        this.macronutrients = productDTO.getMacronutrients();
+    }
+
     void fillWithPatcherProperties(ProductDTO patcher) {
         if (patcher.getName() != null) {
             this.setName(patcher.getName());

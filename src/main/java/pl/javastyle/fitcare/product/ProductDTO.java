@@ -1,30 +1,38 @@
 package pl.javastyle.fitcare.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import pl.javastyle.fitcare.core.BaseDTO;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @ToString
-public class ProductDTO {
+@Getter
+@Setter
+@NoArgsConstructor
+public class ProductDTO extends BaseDTO {
 
-    @Getter @Setter
-    @JsonIgnore
-    private Long id;
-    @Getter @Setter
     @NotBlank
     private String name;
-    @Getter @Setter
+
     @NotBlank
     private String category;
-    @Getter @Setter
+
     @NotNull
     private Double calories;
-    @Getter @Setter
+
     @Valid
     private Macronutrients macronutrients;
+
+    ProductDTO(Product product) {
+        setId(product.getId());
+        this.name = product.getName();
+        this.calories = product.getCalories();
+        this.macronutrients = product.getMacronutrients();
+        this.category = product.getCategory().getName();
+    }
 }
