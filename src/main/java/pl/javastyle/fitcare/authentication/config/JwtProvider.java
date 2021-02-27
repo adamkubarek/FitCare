@@ -18,12 +18,10 @@ public class JwtProvider {
     private int jwtExpiration;
 
     public String generateJwtToken(Authentication authentication) {
-        Auth auth = (Auth) authentication.getPrincipal();
-
         return Jwts.builder()
-                .setSubject(auth.getUsername())
+                .setSubject(((Auth) authentication.getPrincipal()).getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpiration * 1000))
+                .setExpiration(new Date(new Date().getTime() + jwtExpiration * 1000L))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

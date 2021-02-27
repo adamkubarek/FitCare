@@ -22,10 +22,12 @@ public class AuthDTO extends BaseDTO {
 
     @NotBlank
     private String email;
+
     @NotBlank
     @Size(min = 8, max = 25)
     private String password;
     private Set<Role> roles;
+
     @Valid
     private UserDTO userDTO;
 

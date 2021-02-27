@@ -9,12 +9,13 @@ import pl.javastyle.fitcare.core.rest.BindingResultExceptionBuilder;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
 @RequestMapping("api-v1")
 class ProductResource {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     public ProductResource(ProductService productService) {
         this.productService = productService;
@@ -22,19 +23,19 @@ class ProductResource {
 
     @GetMapping("products/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity getProductByName(@PathVariable Long id) {
+    public ResponseEntity<ProductDTO> getProductByName(@PathVariable Long id) {
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping("products")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity getAllProducts(@PathParam("sortBy") String sortedBy) {
+    public ResponseEntity<List<ProductDTO>> getAllProducts(@PathParam("sortBy") String sortedBy) {
         return new ResponseEntity<>(productService.getSortedProducts(sortedBy), HttpStatus.OK);
     }
 
     @PostMapping("products")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity addNewProduct(@RequestBody @Valid ProductDTO product, BindingResult result) {
+    public ResponseEntity<ProductDTO> addNewProduct(@RequestBody @Valid ProductDTO product, BindingResult result) {
         if (result.hasErrors()) {
             new BindingResultExceptionBuilder(result).buildException();
         }
@@ -44,7 +45,7 @@ class ProductResource {
 
     @PutMapping("products/{productId}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity updateProduct(@RequestBody @Valid ProductDTO product, BindingResult result, @PathVariable Long productId) {
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody @Valid ProductDTO product, BindingResult result, @PathVariable Long productId) {
         if (result.hasErrors()) {
             new BindingResultExceptionBuilder(result).buildException();
         }
@@ -54,13 +55,13 @@ class ProductResource {
 
     @PatchMapping("products/{productId}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity patchProduct(@RequestBody ProductDTO product, @PathVariable Long productId) {
+    public ResponseEntity<ProductDTO> patchProduct(@RequestBody ProductDTO product, @PathVariable Long productId) {
         return new ResponseEntity<>(productService.patchProduct(product, productId), HttpStatus.OK);
     }
 
     @DeleteMapping("products/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long id) {
         return new ResponseEntity<>(productService.deleteProduct(id), HttpStatus.OK);
     }
 }

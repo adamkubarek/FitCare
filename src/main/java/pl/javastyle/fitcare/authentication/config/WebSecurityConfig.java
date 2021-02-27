@@ -16,9 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true
-)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthEntryPoint unauthorizedHandler;
@@ -38,7 +36,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().disable();
         //
-
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api-v1/auth/**").permitAll()

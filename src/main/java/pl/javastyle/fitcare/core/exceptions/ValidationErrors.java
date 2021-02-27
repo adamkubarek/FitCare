@@ -3,6 +3,7 @@ package pl.javastyle.fitcare.core.exceptions;
 import lombok.Setter;
 
 public enum ValidationErrors implements ApplicationError {
+
     NOT_VALID("NOT_VALID");
 
     @Setter

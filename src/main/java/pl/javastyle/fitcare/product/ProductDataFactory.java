@@ -14,7 +14,7 @@ import pl.javastyle.fitcare.core.exceptions.DbErrors;
 @Service
 public class ProductDataFactory implements DataFactory {
 
-    private CategoryDAO categoryDAO;
+    private final CategoryDAO categoryDAO;
 
     public ProductDataFactory(CategoryDAO categoryDAO) {
         this.categoryDAO = categoryDAO;

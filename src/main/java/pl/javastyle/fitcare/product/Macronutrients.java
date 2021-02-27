@@ -16,8 +16,10 @@ public class Macronutrients {
 
     @NotNull
     private Double protein;
+
     @NotNull
     private Double carbohydrates;
+
     @NotNull
     private Double fat;
 }

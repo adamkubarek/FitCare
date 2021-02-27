@@ -16,10 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
+
     private static final Logger log = LoggerFactory.getLogger(JwtAuthTokenFilter.class);
 
-    private JwtProvider tokenProvider;
-    private UserDetailsService userDetailsService;
+    private final JwtProvider tokenProvider;
+    private final UserDetailsService userDetailsService;
 
     public JwtAuthTokenFilter(JwtProvider tokenProvider, UserDetailsService userDetailsService) {
         this.tokenProvider = tokenProvider;
@@ -30,22 +31,15 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = getJwt(httpServletRequest);
-
             if (jwt != null && tokenProvider.validateJwtToken(jwt)) {
-                String email = tokenProvider.getEmailFromJwtToken(jwt);
-
-                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-
+                UserDetails userDetails = userDetailsService.loadUserByUsername(tokenProvider.getEmailFromJwtToken(jwt));
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
             log.error("Cannot set user authentication", e);
         }
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 

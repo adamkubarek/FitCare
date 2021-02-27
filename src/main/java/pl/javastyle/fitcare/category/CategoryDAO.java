@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface CategoryDAO extends CrudBaseOperations<Category> {
     Category findCategoryByName(String name);
+
     List<Category> getAllCategories();
 }

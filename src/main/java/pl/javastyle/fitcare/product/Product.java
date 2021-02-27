@@ -19,9 +19,11 @@ import javax.persistence.*;
 public class Product extends BaseEntity {
 
     private String name;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Category category;
     private Double calories;
+
     @Embedded
     private Macronutrients macronutrients;
 

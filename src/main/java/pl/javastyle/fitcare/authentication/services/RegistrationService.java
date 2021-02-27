@@ -4,5 +4,6 @@ import pl.javastyle.fitcare.authentication.dto.AuthDTO;
 
 public interface RegistrationService {
     Boolean registerNewUser(AuthDTO authDTO);
+
     String buildErrorResponse(AuthDTO authDTO);
 }

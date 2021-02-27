@@ -7,7 +7,8 @@ import pl.javastyle.fitcare.core.exceptions.ApplicationException;
 import pl.javastyle.fitcare.core.exceptions.ValidationErrors;
 
 public class BindingResultExceptionBuilder {
-    private BindingResult bindingResult;
+
+    private final BindingResult bindingResult;
 
     public BindingResultExceptionBuilder(BindingResult result) {
         this.bindingResult = result;
@@ -22,7 +23,6 @@ public class BindingResultExceptionBuilder {
 
     private String buildMessageFromBindingResult() {
         StringBuilder allErrorMessages = new StringBuilder();
-
         for (ObjectError error : bindingResult.getAllErrors()) {
             allErrorMessages
                     .append("Given field '")

@@ -10,7 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 public abstract class AbstractCrudOperations<T extends BaseEntity> {
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
     private final Class<T> typeParameterClass;
 
     @PersistenceContext

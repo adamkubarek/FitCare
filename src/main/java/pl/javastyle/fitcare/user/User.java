@@ -30,10 +30,13 @@ public class User extends BaseEntity {
     private Integer age;
     private Integer height;
     private Double weight;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
     @Enumerated(EnumType.STRING)
     private DietGoal dietGoal;
+
     @Enumerated(EnumType.STRING)
     private ActivityRate activityRate;
 

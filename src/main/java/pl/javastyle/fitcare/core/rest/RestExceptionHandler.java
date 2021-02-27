@@ -14,7 +14,7 @@ import pl.javastyle.fitcare.core.exceptions.ValidationErrors;
 public class RestExceptionHandler {
 
     @ExceptionHandler({ApplicationException.class})
-    public ResponseEntity handleApplicationException(Exception exception) {
+    public ResponseEntity<String> handleApplicationException(Exception exception) {
         HttpStatus httpStatus = determineHttpStatusResponse(((ApplicationException) exception).getError());
 
         return new ResponseEntity<>(((ApplicationException) exception).getFullErrorDescription(), new HttpHeaders(), httpStatus);
@@ -22,7 +22,6 @@ public class RestExceptionHandler {
 
     private HttpStatus determineHttpStatusResponse(ApplicationError error) {
         HttpStatus httpStatus = HttpStatus.OK;
-
         if (error.equals(DbErrors.ITEM_NOT_FOUND) || error.equals(DbErrors.CATEGORY_NOT_FOUND)) {
             httpStatus = HttpStatus.NOT_FOUND;
         } else if (error.equals(ValidationErrors.NOT_VALID)) {

@@ -6,6 +6,7 @@ public class ApplicationException extends RuntimeException {
 
     @Getter
     private final transient String fullErrorDescription;
+
     @Getter
     private final transient ApplicationError error;
 

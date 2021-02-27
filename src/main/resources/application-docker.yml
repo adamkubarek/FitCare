@@ -3,7 +3,7 @@ server:
 
 spring:
     datasource:
-        url: jdbc:mysql://vm:3306/fitcare?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://localhost:3306/fitcare?useSSL=false&useUnicode=true&characterEncoding=utf-8
         username: developer
         password: ${MYSQL_DB_PASS}
         initialization-mode: always

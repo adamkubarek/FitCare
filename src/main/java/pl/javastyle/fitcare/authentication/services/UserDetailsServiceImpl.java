@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Primary
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private AuthRepositoryImpl authRepository;
+    private final AuthRepositoryImpl authRepository;
 
     public UserDetailsServiceImpl(AuthRepositoryImpl authRepository) {
         this.authRepository = authRepository;

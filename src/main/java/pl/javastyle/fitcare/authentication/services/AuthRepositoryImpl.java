@@ -16,6 +16,7 @@ import javax.persistence.TypedQuery;
 @Repository
 @Transactional
 public class AuthRepositoryImpl extends AbstractCrudOperations<Auth> implements AuthRepository {
+
     public AuthRepositoryImpl() {
         super(Auth.class);
     }
@@ -23,11 +24,8 @@ public class AuthRepositoryImpl extends AbstractCrudOperations<Auth> implements 
     @Override
     public Auth findByEmail(String email) {
         String sql = "SELECT e FROM Auth e WHERE e.email = :email";
-
         TypedQuery<Auth> query = entityManager.createQuery(sql, Auth.class);
-
         query.setParameter("email", email);
-
         if (CollectionUtils.isEmpty(query.getResultList())) {
             throw new UsernameNotFoundException("User not found with given email: " + email);
         } else {
@@ -48,11 +46,8 @@ public class AuthRepositoryImpl extends AbstractCrudOperations<Auth> implements 
     @Override
     public Role findRoleByName(RoleName name) {
         String sql = "SELECT e FROM Role e where e.name = :name";
-
         TypedQuery<Role> query = entityManager.createQuery(sql, Role.class);
-
         query.setParameter("name", name);
-
         if (CollectionUtils.isEmpty(query.getResultList())) {
             throw new ApplicationException(DbErrors.ITEM_NOT_FOUND);
         } else {

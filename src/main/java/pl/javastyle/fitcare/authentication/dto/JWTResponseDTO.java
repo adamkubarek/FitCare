@@ -11,6 +11,7 @@ import java.util.Collection;
 @Getter
 @Setter
 public class JWTResponseDTO {
+
     private String token;
     private String email;
     private Collection<? extends GrantedAuthority> authorities;

@@ -1,10 +1,11 @@
 package pl.javastyle.fitcare.core.exceptions;
 
 public enum DbErrors implements ApplicationError {
+
     ITEM_NOT_FOUND("Given item doesn't exist"),
     CATEGORY_NOT_FOUND("Given category does not exist");
 
-    private String description;
+    private final String description;
 
     DbErrors(String description) {
         this.description = description;

@@ -19,18 +19,25 @@ public class UserDTO {
 
     @JsonIgnore
     private Long id;
+
     @NotNull
     private String name;
+
     @NotNull
     private Integer age;
+
     @NotNull
     private Integer height;
+
     @NotNull
     private Double weight;
+
     @NotNull
     private Gender gender;
+
     @NotNull
     private DietGoal dietGoal;
+
     @NotNull
     private ActivityRate activityRate;
 }
